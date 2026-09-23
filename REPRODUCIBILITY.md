@@ -49,7 +49,20 @@ The compact audit verifies the repository manifest, the five external model
 identities, the principal frozen result counts and intervals, and the stored
 trace-level audit outcomes. The complete manuscript-number and trace
 recomputation scripts remain under `scripts/`; they require restoring the raw
-artifact archive described in `DATA_AND_MODELS.md` to its documented paths.
+artifact archive using `restore_artifact.py` as described in `DATA_AND_MODELS.md`.
+Run these in a disposable checkout: the original audit entry points write
+their recomputed audit JSON files to the analysis directories. They do not
+start a simulator.
+
+```bash
+python scripts/audit_manuscript_experiment_numbers.py
+python scripts/audit_v19_mujoco_zero_shot_transfer.py
+python scripts/audit_deployment_gap_completed.py
+```
+
+The manuscript-number check aggregates frozen evaluation records; the latter
+two checks additionally recompute their metrics from step traces. These are
+different levels of evidence, not three full independent reruns.
 
 ## Full evaluation
 
@@ -60,6 +73,10 @@ budgets, and evaluation rules. Relevant entry points are:
 - `forcewipe_v19/scripts/run_ppo_selected_confirmation.py`
 - `forcewipe_v19/scripts/run_deployment_gap_stress.py`
 - `forcewipe_v19/scripts/run_v19_mujoco_zero_shot_transfer_once.py`
+
+The archived one-shot runner IDs are already consumed; do not delete restored
+outputs to rerun them. A new experiment needs a separate run ID and output
+directory. The release verification commands above do not perform new runs.
 
 These runs are compute-intensive and require the checkpoint archive. The
 published results should be verified against `MANIFEST_SHA256.csv` and

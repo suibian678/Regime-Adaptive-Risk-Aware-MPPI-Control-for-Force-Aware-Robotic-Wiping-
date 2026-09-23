@@ -28,6 +28,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+## IEEE manuscript class
+
+`forcewipe_v19/paper/ojcs/ieeetj.cls` is the unmodified IEEE Open Journals
+class downloaded through the official OJ-CS Template Selector (template 477).
+Its original copyright and LaTeX Project Public License 1.3 notice are retained
+in that file. It is not covered by the ForceWipe MIT licence.
+
 ## Runtime dependencies
 
 ManiSkill, SAPIEN, MuJoCo, PyTorch, TorchRL, TensorDict, Gymnasium, Hydra,

@@ -1,13 +1,14 @@
 # IEEE Open Journal of the Computer Society submission checklist
 
-- [x] IEEE journal template is used rather than the earlier conference class.
+- [x] The official IEEE OJ-CS `ieeetj` template is used; its origin and hash
+  are recorded in `TEMPLATE_SOURCE.md`.
 - [x] Abstract is between 100 and 200 words and contains no citations or
   displayed mathematics.
 - [x] Index terms are included.
 - [x] Main article excludes the detailed appendices; they are packaged as
   separate supplementary material.
-- [ ] Confirm that the compiled article is no more than 12 double-column pages,
-  including references.
+- [x] The article compiles to 12 double-column pages, including references,
+  using the official template without reduced margins or body font sizes.
 - [x] Vector and raster figures are available as separate files.
 - [x] AI-assisted content is disclosed in the acknowledgment section.
 - [ ] Insert the public Git repository URL and archival data DOI.

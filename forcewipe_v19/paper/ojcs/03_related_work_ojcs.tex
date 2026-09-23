@@ -1,0 +1,81 @@
+\section{Related Work}
+\label{sec:related_work}
+
+\subsection{Robot Wiping and Surface Interaction}
+
+Surface processing couples geometric coverage with sustained contact.
+Probabilistic Surface Interaction Primitives (ProSIP) conditions compliant
+motions on tool-centre-point (TCP) pose, surface geometry, and context
+\cite{unger2024prosip}. Adaptive Wiping combines few-shot imitation,
+force--torque feedback, and pre-trained object representations
+\cite{tsuji2025adaptivewiping}. Liu \emph{et al.} study quality-critical wiping
+over randomised curvatures, frictions, and waypoints using a visual-language
+curriculum; their 20~Hz pose policy operates through an operational-space
+controller around a 60~N force target~\cite{liu2025wipingvlm}. We examine direct
+learned Cartesian displacements at 5, 8, and 12~N.
+
+Variable Impedance Control in End-Effector Space (VICES) uses variable
+impedance as a reinforcement-learning (RL) action space, including for wiping
+\cite{martinmartin2019vices}. Beltran-Hernandez \emph{et al.} combine RL with
+parallel position--force or admittance control and a real-robot fail-safe
+\cite{beltranhernandez2020force}. Zhu \emph{et al.} couple an image-based
+equilibrium-point/impedance policy with faster contact-aware control
+\cite{zhu2022contactsafe}. Force-Guided Exploration for Robust Contact-Rich
+Manipulation under Uncertainty (FORGE) conditions assembly policies on a
+maximum allowable force and uses dynamics randomisation for hardware transfer
+\cite{noseworthy2025forge}. These approaches structure learned contact through
+the action space or execution layer. Our matched comparison uses a common
+Cartesian-delta interface for TD-MPC2 and proximal policy optimisation (PPO),
+with adaptive admittance as a separate reference.
+
+Curved-surface methods also control tool orientation. Armesto \emph{et al.}
+transfer planar wiping to unknown curves by estimating the contact constraint
+and aligning the tool from force/torque feedback
+\cite{armesto2018constraintaware}. Li \emph{et al.} estimate pose deviation,
+lift a planar path onto an unknown workpiece, and close a normal-force loop
+\cite{li2023unknownsurface}. Our registered frame supplies a local normal, but
+Eq.~\eqref{eq:task_frame_map} controls translation only. Tool posture is not a
+policy action, a distinction relevant to the observed curved-contact boundary.
+
+\subsection{Force Control and Contact Simulation}
+
+Hybrid position--force control separates directional objectives
+\cite{raibert1981hybrid}; impedance and admittance regulate complementary
+motion--force relations~\cite{hogan1985impedance,ott2010unified}. Our adaptive
+admittance baseline shares the time-causal observation and actuator action box.
+Force-feedback model-predictive control (MPC) offers another approach:
+Kleff \emph{et al.} incorporate measured force/torque through robot-actuation
+dynamics~\cite{kleff2022forcefeedbackmpc}, while Jordana \emph{et al.} estimate
+force-model discrepancy online without an explicit contact-force evolution
+model~\cite{jordana2024forcefeedbackmpc}. Our controller instead learns latent
+dynamics conditioned on scalar normal force and issues displacements without
+a separate force-control layer.
+
+Runtime shields modify policy proposals~\cite{alshiekh2018shielding}, and
+control barrier functions can enforce forward-invariance conditions
+\cite{ames2019cbf,cheng2019rlcbf}. Here, learned actions execute without an
+external shield or force-dependent post-processing. Sampled force exceedances
+are therefore empirical observations for a specified numerical configuration,
+not formal invariance guarantees. Contact models, relaxations, and solvers can
+produce different application-level behaviour~\cite{lelidec2024contact};
+Sec.~\ref{sec:credibility_audit} tests the sensitivity of our force-tail claims.
+
+\subsection{Direct Model-Based Reinforcement Learning}
+
+Temporal-difference model-predictive control (TD-MPC) and TD-MPC2 combine
+latent dynamics, value prediction, and online planning
+\cite{hansen2022tdmpc,hansen2024tdmpc2}. We retain actor-guided MPPI, replacing
+the earlier force-threshold router with continuous causal memberships that
+adapt planning costs and search budget. A same-checkpoint fixed-planner
+ablation isolates this adaptation from the learned actor and world model.
+PPO~\cite{schulman2017ppo} provides a direct model-free comparator, with its
+training budget and hyperparameters examined separately.
+
+Structured alternatives include residual RL around a conventional controller
+\cite{johannink2019residual}, parameterised action primitives and Manipulation
+Primitive-augmented Reinforcement Learning (MAPLE)
+\cite{dalal2021raps,nasiriany2022maple}, and impedance primitive-augmented
+hierarchical reinforcement learning (IMP-HRL)~\cite{tahmaz2025imphrl}. Our
+study instead tests regime-adaptive planning within direct actor/world-model
+control, using controlled variation, weak-curvature transfer, and
+claim-specific numerical auditing.

@@ -15,7 +15,7 @@ to a MuJoCo task port.
 
 Across 270 paired evaluations, the proposed planner raises compound pass from
 85/135 to 100/135 and reduces median planning time by 25.7 ms. Cross-engine
-evaluation retains all 30 flat and inclined compound outcomes and identifies
+evaluation achieves compound pass in all 30 flat and inclined trials and identifies
 weakly curved contact as the remaining portability boundary. The paper reports
 this as simulation robustness rather than hardware validation, and it separates
 task-level evidence from setting-sensitive force-tail statistics.

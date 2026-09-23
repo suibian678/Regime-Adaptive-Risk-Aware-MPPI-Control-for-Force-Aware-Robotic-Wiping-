@@ -1,0 +1,63 @@
+{
+  "format": "forcewipe_v17_stage0a_r3_rev4_artifact_recovery_independent_audit_v1",
+  "audit_date": "2026-09-05",
+  "status": "PASS",
+  "decision": "GO_COMPLETED_ARTIFACT_ONLY_FINALIZATION_FROZEN",
+  "execution_scope": "read_only_completed_artifact_audit",
+  "simulator_executed_by_audit": false,
+  "source_run_status_preserved": "ABORTED_INFRASTRUCTURE",
+  "recovered_scientific_status": "completed_scientific_fail",
+  "scientific_terminal_state": "SCIENTIFIC_RUN_COMPLETE_36",
+  "numerical_result": "STAGE0A_NUMERICALLY_SENSITIVE_MIXED",
+  "mechanism_panel_result": "UNRESOLVED_INSTRUMENTATION",
+  "next_required_gate": "NONE",
+  "supervision_target_selection_eligible": false,
+  "training_permitted": false,
+  "counts": {
+    "recovery_payloads_verified": 8,
+    "recovery_payload_mismatches": 0,
+    "source_evaluations": 36,
+    "sensitivity_cells": 32,
+    "triggered_cells": 11,
+    "reduction_cells": 10,
+    "increase_cells": 1,
+    "stable_cells": 21,
+    "source_raw_files": 397,
+    "source_raw_total_bytes": 421547516,
+    "source_raw_mismatches": 0,
+    "source_directory_files": 400,
+    "unexpected_source_files": 0,
+    "staging_paths_remaining": 0,
+    "python_processes_remaining": 0,
+    "sapien_or_maniskill_processes_remaining": 0
+  },
+  "triple_manifest_identity": {
+    "recovery_source_raw_files_vs_source_finalizer_files": "EXACT_ORDERED_MATCH",
+    "recovery_source_raw_files_vs_original_abort_manifest_files": "EXACT_ORDERED_MATCH",
+    "actual_source_file_bytes_size_sha256": "397_OF_397_MATCH"
+  },
+  "read_only_state": {
+    "recovery_payloads": "8_OF_8",
+    "recovery_permission": true,
+    "recovery_lock": true,
+    "source_permission": true,
+    "source_lock": true
+  },
+  "sha256": {
+    "recovery_permission": "de84720aac741004fe9956ee36d63cee69a47fee30f8ac1ffeb0b28b94492f95",
+    "recovery_lock": "0bf9fb87792f4742d88b896fee1f8fb85654ddc2078fb0030e7ef26b142cff35",
+    "recovery_protocol": "e3d0364e45de814117bd9f96c614ba446a6cf814c926223df08617cb778b2b71",
+    "recovery_preauthorization_manifest": "29615798ac291f2cc1b8f055f976e9f62b474fecc2d8ff49dd5a451047c5452e",
+    "source_finalizer_result": "dc4c2a8e169eedbd110b7bcae9757f4846e54f9a6601c8f1b8182b918af1431d",
+    "source_finalizer_run_manifest": "f25dfb501fdf33ec6e25b688c7375b4940fb886e86417b1b6a172840a581627d",
+    "recovery_result": "31171095837fa458770e9ded35fb0b48a5acc27e620c5e5e9959d52ee9a6680a",
+    "recovery_postcheck": "4a2c4463863fabe97b86bdf6f00d53c4c3b84836edfb4f0580f7325badf04406",
+    "recovery_manifest": "accc5aefeb3f2510fea93a52fe47a6c0d55ee19a08142c52a552bcac90dd712d",
+    "recovery_closure": "af968b8e8e5c3ac9c6d03624d21c3b24d8fca2228a03af410120e1f1192b3d40",
+    "source_permission": "ef9f1430cfcf4fed02457937ab973625555fc11bc07ec1f1797ea0c2072f87c5",
+    "source_lock": "789b05f731f9ba17d21bb38db2d2d439f55280ba4216b6ad2c97fee9c3339418",
+    "source_abort_manifest": "282c8975ff9dacf1cc31259df8499be78083add8b12cd51f859f41ca0bd206e6",
+    "source_abort_closure": "874259059ba4fe3f099367d9212de80725a25215d83bd2541d42bf19e7d84b02"
+  },
+  "conclusion": "The simulator-free recovery publication is internally and externally consistent. It preserves the original infrastructure-abort identity while validly recovering the preregistered scientific analysis from immutable source artifacts."
+}

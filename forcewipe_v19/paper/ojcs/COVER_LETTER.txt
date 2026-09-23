@@ -10,7 +10,7 @@ risk-aware MPPI planner that changes both its planning objective and sampling
 budget from causal contact evidence. Across 270 paired evaluations, the method
 raises compound pass from 85/135 to 100/135 while using eight fewer planning
 samples and 25.7 ms less median planning time. A separate zero-shot MuJoCo
-study retains all 30 flat and inclined compound outcomes and identifies curved
+study achieves compound pass in all 30 flat and inclined trials and identifies curved
 contact as the remaining portability boundary.
 
 The manuscript focuses on world-model control, adaptive computation, rigorous

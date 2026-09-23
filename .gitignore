@@ -11,6 +11,12 @@ __pycache__/
 *.ckpt
 *.jsonl
 !forcewipe_v19/results/training/*/TRAINING_METRICS.jsonl
+# Restored archival inputs stay outside the compact Git payload.
+/forcewipe_v19/results/train/
+/forcewipe_v19/results/final/
+/forcewipe_v19/results/calibration/
+/forcewipe_v19/results/crosssim/v19_*/
+/forcewipe_v19/results/dev/
 *.zip
 *.tar
 *.tar.gz

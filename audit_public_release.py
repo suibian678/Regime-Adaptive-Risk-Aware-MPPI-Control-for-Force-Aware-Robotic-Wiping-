@@ -66,6 +66,22 @@ def main() -> int:
     }
     require(len(factor_keys) == 270, "factor-separated keys are unique", checks)
     arms = {row["arm"]: row for row in factor["arm_summaries"]}
+    def tracking(row):
+        mre, nrmse = row.get("mean_relative_error"), row.get("target_normalized_rmse")
+        return mre is not None and nrmse is not None and mre <= 0.15 and nrmse <= 0.20
+
+    def joint_pass(row):
+        return bool(row["success"] and tracking(row) and row["force_limit_violation_samples"] == 0)
+
+    for name, summary in arms.items():
+        evaluations = [r for r in factor["evaluations"] if r["arm"] == name]
+        require(
+            len(evaluations) == summary["evaluations"] == 135
+            and sum(bool(r["success"]) for r in evaluations) == summary["task_successes"]
+            and sum(tracking(r) for r in evaluations) == summary["tracking_passes"]
+            and sum(joint_pass(r) for r in evaluations) == summary["joint_passes"]
+            and sum(r["force_limit_violation_samples"] for r in evaluations) == summary["force_limit_violation_samples"],
+            f"{name}: aggregates independently recomputed from 135 evaluation records", checks)
     require(
         arms["M1_fixed_objective_fixed_compute"]["joint_passes"] == 85
         and arms["M4_full_adaptive"]["joint_passes"] == 100,
@@ -111,6 +127,8 @@ def main() -> int:
 
     crosssim = load("results/crosssim/RESULT.json")
     engines = {row["engine"]: row for row in crosssim["engine_summaries"]}
+    require(sum(joint_pass(r) for r in crosssim["evaluations"]) == 30,
+            "MuJoCo compound count recomputed from evaluation records", checks)
     require(
         crosssim["status"] == "completed" and len(crosssim["evaluations"]) == 45
         and engines["MuJoCo"]["joint_passes"] == 30

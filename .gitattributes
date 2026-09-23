@@ -5,3 +5,5 @@
 *.pt binary
 *.pth binary
 *.ckpt binary
+# Keep the upstream IEEE class byte-identical to the official download.
+*.cls -text

@@ -1,4 +1,4 @@
-\documentclass[journal]{IEEEtran}
+\documentclass{ieeetj}
 
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -8,26 +8,42 @@
 \usepackage{placeins}
 \usepackage{tabularx}
 \usepackage{url}
+\usepackage{xcolor}
+\usepackage{etoolbox}
+\AtBeginDocument{\definecolor{tmlcncolor}{cmyk}{0.93,0.59,0.15,0.02}\definecolor{NavyBlue}{RGB}{0,86,125}}
 \graphicspath{{figures/}}
+% Official IEEE OJ-CS template (selector publication 210, template 477).
+% Publisher-assigned branding, dates, DOI, and volume are not invented.
+\def\OJlogo{}
+\def\seclogo{}
+\makeatletter
+\let\@revised\@empty
+\patchcmd{\@maketitle}{\fi.\space}{\fi\space}{}{}
+\def\ps@submission{\def\@oddhead{}\def\@evenhead{}%
+  \def\@oddfoot{\hfil\thepage\hfil}\let\@evenfoot\@oddfoot}
+\makeatother
 
 \title{Regime-Adaptive Risk-Aware MPPI Control for Force-Aware Robotic Wiping with Temporal-Difference World Models}
 
-\author{Zhiheng Li%
-\thanks{Zhiheng Li is an independent researcher in Shanghai, China
-(e-mail: LLzhiheng@outlook.com).}}
+\author{Zhiheng Li\textsuperscript{1}}
+\affil{Independent Researcher, Shanghai, China}
+\corresp{Corresponding author: Zhiheng Li (email: LLzhiheng@outlook.com).}
 
 \begin{document}
-\maketitle
+\markboth{}{Li}
 
 \input{01_abstract_method_draft}
 
 \begin{IEEEkeywords}
-robotic wiping, force-aware control, TD-MPC2, model-predictive path integral
-control, contact-rich manipulation, cross-simulator transfer
+contact-rich manipulation, cross-simulator transfer, force-aware control,
+model-predictive path integral control, robotic wiping, TD-MPC2
 \end{IEEEkeywords}
+\maketitle
+\pagestyle{submission}
+\thispagestyle{submission}
 
 \input{02_introduction_method_draft}
-\input{03_related_work_method_draft}
+\input{03_related_work_ojcs}
 \input{04_simulation_task_method_draft}
 \input{05_risk_aware_method_draft}
 \input{06_experimental_design_method_draft}

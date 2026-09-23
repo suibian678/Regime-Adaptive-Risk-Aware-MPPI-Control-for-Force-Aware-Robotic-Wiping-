@@ -1,6 +1,6 @@
 - Direct force-conditioned TD-MPC2 completes controlled multi-force wiping.
 - RA-RMPPI improves compound pass by 11.11 percentage points.
 - Adaptive planning cuts eight samples and 25.7 ms of median planning time.
-- MuJoCo transfer preserves flat and inclined cases but fails on curvature.
+- MuJoCo tests pass on flat and inclined surfaces but not on curvature.
 - Numerical audits separate robust task outcomes from sensitive force tails.
 
