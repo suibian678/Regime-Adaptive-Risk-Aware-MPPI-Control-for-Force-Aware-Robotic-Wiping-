@@ -1,0 +1,27 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+This work introduced RA-RMPPI, a force-conditioned TD-MPC2 controller that
+adapts both its planning objective and its computation to causal contact
+regimes. Matched component studies separated objective adaptation from compute
+adaptation, while behaviour-cloning, router, and risk-representation ablations
+identified the smallest supported formulation. In the factor-separated
+simulation study, RA-RMPPI raised compound pass from 85/135 to 100/135, reduced
+MRE and NRMSE, and used fewer planning samples and less host planning time
+than the fixed planner built from the same checkpoints.
+
+The improvement is specific to force regulation and computation. Task
+completion remained 132/135 versus 133/135, both planners recorded two native
+samples above 15~N, and the adaptive planner had a higher mean peak force.
+The cylindrical 12~N condition therefore remains a concrete boundary rather
+than an exception hidden by aggregate results.  A 420-evaluation
+deployment-gap panel further identified signed force bias, 50-ms delay, and
+registered-normal error as distinct sensitivities. In a zero-shot MuJoCo
+stress test, all 30 flat and inclined evaluations retained the compound
+outcome, while all 15 weak-curvature evaluations failed; the port's remaining
+tangential calibration mismatch precludes a matched-solver claim. Within the
+evaluated simulation setting, the study shows that continuous regime adaptation can
+make direct learned wiping more accurate and less computationally demanding,
+while reliable force-tail control under curvature requires a surface-following
+posture or learned-constraint extension beyond the present translation-only
+action interface, followed by physical validation.

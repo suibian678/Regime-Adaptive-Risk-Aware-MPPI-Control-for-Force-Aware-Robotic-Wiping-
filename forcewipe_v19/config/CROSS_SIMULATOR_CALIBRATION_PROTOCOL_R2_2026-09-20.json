@@ -1,0 +1,41 @@
+{
+  "format": "forcewipe_v19_cross_simulator_calibration_protocol_r2_v1",
+  "status": "FROZEN_BEFORE_POLICY_DEPLOYMENT",
+  "supersedes": "CROSS_SIMULATOR_CALIBRATION_PROTOCOL_2026-09-20.json",
+  "revision_reason": "The complete R1 sweep failed held-out validation because contact-only parameters could not reproduce the measured Panda execution response. R2 adds one explicit actuator-response gain estimated only from pre-contact policy-independent displacement traces.",
+  "research_question": "Can a transparent MuJoCo task-dynamics port reproduce policy-independent PhysX contact responses closely enough to support a zero-shot cross-engine robustness check?",
+  "scope": "Cross-engine task-dynamics robustness; not hardware validation, Sim2Real evidence, or full Panda robot equivalence.",
+  "reference_engine": "SAPIEN/PhysX frozen V19 B0, 8 N task definition",
+  "candidate_engine": "MuJoCo with the same 100-Hz task interface and 1-kHz internal physics",
+  "policy_checkpoint_used_for_calibration": false,
+  "fit_motions": [
+    "fit_light_load_hold_release",
+    "fit_medium_load_hold_release"
+  ],
+  "held_out_validation_motions": [
+    "validation_contact_tangent_release",
+    "validation_medium_unload"
+  ],
+  "parameter_grid": {
+    "actuation_gain": [0.8, 0.85, 0.9, 0.95, 1.0],
+    "contact_time_constant_s": [0.002, 0.005, 0.01, 0.02],
+    "contact_damping_ratio": [0.5, 1.0, 2.0],
+    "contact_margin_m": [0.0, 0.001, 0.005, 0.01, 0.02],
+    "solver_iterations": [50],
+    "grid_cells": 300,
+    "rationale": "R1 pre-contact displacement ratios were 0.832, 0.915, 0.943, and 0.952 at 50, 100, 150, and 180 samples, so 0.80--1.00 in 0.05 increments brackets the measured effective actuator response. Contact ranges retain the pre-policy R1 grid."
+  },
+  "selection_rule": "Lexicographically minimise the worst, then mean, prespecified tolerance ratio across fit motions.",
+  "validation_tolerances": {
+    "contact_force_nrmse": 0.2,
+    "tool_displacement_rmse_m": 0.0005,
+    "contact_onset_absolute_error_samples_at_100hz": 5,
+    "peak_force_relative_error": 0.2,
+    "rationale": "Force errors use the frozen task-level 20% NRMSE scale; 0.5 mm is one maximum normal command increment; five samples are 50 ms at the frozen control rate; peak error uses the same 20% relative scale."
+  },
+  "decision_rule": "The selected cell must satisfy every tolerance on both held-out motions before policy checkpoints are evaluated. Failure is reported as insufficient engine equivalence and blocks a cross-engine policy-performance claim.",
+  "external_documentation": [
+    "https://mujoco.readthedocs.io/en/3.3.3/modeling.html",
+    "https://mujoco.readthedocs.io/en/latest/XMLreference.html"
+  ]
+}

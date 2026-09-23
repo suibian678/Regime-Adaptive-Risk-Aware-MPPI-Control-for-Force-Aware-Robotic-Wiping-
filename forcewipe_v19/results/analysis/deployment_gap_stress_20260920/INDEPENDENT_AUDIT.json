@@ -1,0 +1,91 @@
+{
+  "checks": [
+    {
+      "check": "completed run directory exists",
+      "pass": true
+    },
+    {
+      "check": "no staging directory remains",
+      "pass": true
+    },
+    {
+      "check": "result and run state are completed",
+      "pass": true
+    },
+    {
+      "check": "result contains 375 evaluations",
+      "pass": true
+    },
+    {
+      "check": "run definition contains 375 evaluations",
+      "pass": true
+    },
+    {
+      "check": "run definition binds the protocol bytes",
+      "pass": true
+    },
+    {
+      "check": "protocol denominator is 375",
+      "pass": true
+    },
+    {
+      "check": "evaluation identities are unique and match the run definition",
+      "pass": true
+    },
+    {
+      "check": "375 unique traces are present with no unindexed trace",
+      "pass": true
+    },
+    {
+      "check": "all trace-level scientific metrics recompute",
+      "pass": true
+    },
+    {
+      "check": "all per-step planner seeds recompute",
+      "pass": true
+    },
+    {
+      "check": "all steps preserve direct action authority without shield or rewiping",
+      "pass": true
+    },
+    {
+      "check": "all steps contain closed native, perturbed, and learner-visible evidence",
+      "pass": true
+    },
+    {
+      "check": "aggregate native sample count recomputes",
+      "pass": true
+    },
+    {
+      "check": "aggregate task, tracking, and compound counts recompute",
+      "pass": true
+    },
+    {
+      "check": "aggregate force-tail metrics recompute",
+      "pass": true
+    },
+    {
+      "check": "completed analysis reports 375 stress and 45 reused nominal evaluations",
+      "pass": true
+    }
+  ],
+  "checks_passed": 17,
+  "checks_total": 17,
+  "format": "forcewipe_v19_deployment_gap_independent_audit_v1",
+  "protocol_sha256": "3e65cbdf4520bb3084088f740cb2b0c1f0bd1cbfce579ae2eb2f35bd66dbd4eb",
+  "recomputed": {
+    "authority_errors": 0,
+    "binding_errors": 0,
+    "compound_passes": 226,
+    "evaluations": 375,
+    "force_limit_violation_samples": 29,
+    "maximum_peak_force_n": 26.084163665771484,
+    "native_samples": 324309,
+    "planner_seed_errors": 0,
+    "task_successes": 333,
+    "tracking_passes": 228
+  },
+  "result_sha256": "779ca44bb4c3a475b6d15023262e33cca57a7d164315ff2225ab892eff54ef1d",
+  "run_definition_sha256": "e59586d7d90b5bf8f9cbe113b1ae8f6d8e6cb9af55da4811000706fcbefb7c13",
+  "status": "PASS"
+}

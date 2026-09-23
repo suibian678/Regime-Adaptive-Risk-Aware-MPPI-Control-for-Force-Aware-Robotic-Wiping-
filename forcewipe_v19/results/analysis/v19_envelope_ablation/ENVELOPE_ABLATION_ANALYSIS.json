@@ -1,0 +1,115 @@
+{
+  "evaluations": 45,
+  "format": "forcewipe_v19_envelope_ablation_analysis_v1",
+  "summaries": [
+    {
+      "evaluations": 5,
+      "maximum_peak_force_n": 5.127384185791016,
+      "mean_force_n": 4.7344063113270725,
+      "mean_mre": 0.0531187377345854,
+      "mean_nrmse": 0.06585462151948912,
+      "risk_envelope_mode": "force_only",
+      "target_force_n": 5.0,
+      "task_successes": 5,
+      "tracking_passes": 5,
+      "violation_samples": 0
+    },
+    {
+      "evaluations": 5,
+      "maximum_peak_force_n": 8.684822082519531,
+      "mean_force_n": 7.632758592866229,
+      "mean_mre": 0.04590517589172134,
+      "mean_nrmse": 0.10557026135207329,
+      "risk_envelope_mode": "force_only",
+      "target_force_n": 8.0,
+      "task_successes": 5,
+      "tracking_passes": 5,
+      "violation_samples": 0
+    },
+    {
+      "evaluations": 5,
+      "maximum_peak_force_n": 13.923944473266602,
+      "mean_force_n": 9.720984866643974,
+      "mean_mre": 0.18991792777966876,
+      "mean_nrmse": 0.21597595014978807,
+      "risk_envelope_mode": "force_only",
+      "target_force_n": 12.0,
+      "task_successes": 5,
+      "tracking_passes": 0,
+      "violation_samples": 0
+    },
+    {
+      "evaluations": 5,
+      "maximum_peak_force_n": 5.127384185791016,
+      "mean_force_n": 4.7344063113270725,
+      "mean_mre": 0.0531187377345854,
+      "mean_nrmse": 0.06585462151948912,
+      "risk_envelope_mode": "point_envelope",
+      "target_force_n": 5.0,
+      "task_successes": 5,
+      "tracking_passes": 5,
+      "violation_samples": 0
+    },
+    {
+      "evaluations": 5,
+      "maximum_peak_force_n": 8.684822082519531,
+      "mean_force_n": 7.632758592866229,
+      "mean_mre": 0.04590517589172134,
+      "mean_nrmse": 0.10557026135207329,
+      "risk_envelope_mode": "point_envelope",
+      "target_force_n": 8.0,
+      "task_successes": 5,
+      "tracking_passes": 5,
+      "violation_samples": 0
+    },
+    {
+      "evaluations": 5,
+      "maximum_peak_force_n": 13.923944473266602,
+      "mean_force_n": 9.720984866643974,
+      "mean_mre": 0.18991792777966876,
+      "mean_nrmse": 0.21597595014978807,
+      "risk_envelope_mode": "point_envelope",
+      "target_force_n": 12.0,
+      "task_successes": 5,
+      "tracking_passes": 0,
+      "violation_samples": 0
+    },
+    {
+      "evaluations": 5,
+      "maximum_peak_force_n": 5.127384185791016,
+      "mean_force_n": 4.7344063113270725,
+      "mean_mre": 0.0531187377345854,
+      "mean_nrmse": 0.06585462151948912,
+      "risk_envelope_mode": "calibrated",
+      "target_force_n": 5.0,
+      "task_successes": 5,
+      "tracking_passes": 5,
+      "violation_samples": 0
+    },
+    {
+      "evaluations": 5,
+      "maximum_peak_force_n": 8.684822082519531,
+      "mean_force_n": 7.632758592866229,
+      "mean_mre": 0.04590517589172134,
+      "mean_nrmse": 0.10557026135207329,
+      "risk_envelope_mode": "calibrated",
+      "target_force_n": 8.0,
+      "task_successes": 5,
+      "tracking_passes": 5,
+      "violation_samples": 0
+    },
+    {
+      "evaluations": 5,
+      "maximum_peak_force_n": 13.923944473266602,
+      "mean_force_n": 9.71445994948434,
+      "mean_mre": 0.19046167087630494,
+      "mean_nrmse": 0.216662300989256,
+      "risk_envelope_mode": "calibrated",
+      "target_force_n": 12.0,
+      "task_successes": 5,
+      "tracking_passes": 0,
+      "violation_samples": 0
+    }
+  ],
+  "unique_keys": 45
+}

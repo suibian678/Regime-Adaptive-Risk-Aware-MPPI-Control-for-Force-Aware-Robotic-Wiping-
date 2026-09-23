@@ -1,0 +1,96 @@
+\section{Method Development Results}
+\label{sec:development_results}
+
+\subsection{Adaptive Objective and Compute}
+
+All four planner arms completed all 60 development evaluations, and no native
+sample exceeded 15~N. Table~\ref{tab:component_ablation_dev} summarizes the
+matched results across the three force targets. M4 has the lowest mean MRE and
+NRMSE at every target. Objective adaptation and compute adaptation each
+recover part of the difference from M1, while their combination gives the
+largest 12~N improvement. M4 reduces 12~N RMSE from 2.927 to 2.600~N and raises
+mean force from 9.308 to 9.714~N. The strict 12~N tracking gate nevertheless
+remains 0/5 for every arm.
+
+\begin{table*}[t]
+\centering
+\caption{Matched planner-component development ablation. MRE and NRMSE are
+averaged over 15 seed--target evaluations per arm.}
+\label{tab:component_ablation_dev}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Arm & MRE (\%) & NRMSE (\%) & Samples & Median time (ms) \\
+\midrule
+M1: fixed objective, fixed compute & 12.03 & 14.66 & 128.0 & 112.18 \\
+M2: adaptive objective             & 10.94 & 13.77 & 128.0 & 107.86 \\
+M3: adaptive compute               & 10.26 & 13.52 & 121.2 &  80.58 \\
+M4: complete method                &  9.65 & 12.94 & 120.4 &  83.25 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+The compute schedule lowers the mean sample count because stable acquisition
+and lower-force tracking often use a smaller budget. At 12~N, the schedule
+increases the sample count when predicted transient risk rises. The complete
+method therefore allocates computation by regime rather than reducing it
+uniformly.
+
+\subsection{Behaviour-Cloning Strength}
+
+The one-step force-prediction RMSE is effectively unchanged across BC
+coefficients, whereas actor--teacher action RMSE falls from 1.006 without BC
+to 0.099 and 0.090 at coefficients 0.5 and 2. Table~\ref{tab:bc_ablation_dev}
+shows the resulting closed-loop difference. Without BC, none of the 15 runs
+establishes contact. A coefficient of 0.5 restores contact but remains
+seed-sensitive, with three task failures and two samples above 15~N. The
+coefficient of 2 completes all runs without a sampled violation. BC therefore
+stabilizes the actor proposal used by MPPI rather than improving the one-step
+force model.
+
+\begin{table*}[t]
+\centering
+\caption{Behaviour-cloning development ablation over five seeds and three
+force targets.}
+\label{tab:bc_ablation_dev}
+\small
+\begin{tabular}{rrrrrr}
+\toprule
+BC & Task & Tracking & No contact & Samples $>15$ & Max peak (N) \\
+\midrule
+0   &  0/15 &  0/15 & 15/15 & 0 &  0.000 \\
+0.5 & 12/15 & 10/15 &  0/15 & 2 & 16.513 \\
+2   & 15/15 & 10/15 &  0/15 & 0 & 13.924 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{Router and Risk-Representation Ablations}
+
+The historical hard router was evaluated at six activation fractions from
+0.70 to 0.95 across the same five checkpoints and three force targets. All
+90 runs completed without a sampled force violation. The actor-step fraction
+rose from 27.1\% to 60.5\%, whereas mean MRE changed gradually from 6.45\% to
+5.25\%. At 12~N, actor use rose from 25.2\% to 88.1\%, yet mean MRE remained
+10.16\% at the highest threshold. There is therefore no discrete operating
+point that resolves the high-force limitation; the threshold principally
+controls planner use.
+
+The earlier registered-frame controller also permits a sample-pooled
+decomposition of its 56,481 contact samples at 12~N. Stable MPPI operation
+accounts for 51,771 samples with a mean force of 11.020~N, actor re-entry
+accounts for 1,950 samples at 10.075~N, and initial or other contact accounts
+for 2,760 samples at 6.605~N. Their pooled mean is 10.772~N; the corresponding
+mean of per-evaluation contact means is 10.767~N. The stable planner segment
+therefore contains most of the negative bias, while actor re-entry deepens it.
+This evidence motivated separate router and risk-representation ablations
+rather than attributing the 12~N shortfall to contact loss alone.
+
+The three risk representations each complete 15/15 runs, pass strict tracking
+in 10/15, and produce no sample above 15~N. Force-only and point-envelope
+trajectories are identical. The calibrated alternative changes only the
+12~N trajectories and gives a slightly higher aggregate NRMSE (12.94\% versus
+12.91\%). The frozen rule therefore selects next-force prediction alone.
+These development results select the full M4 objective-and-compute mechanism,
+BC coefficient 2, and the force-only risk representation before the
+factor-separated evaluation.

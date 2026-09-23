@@ -1,0 +1,117 @@
+\section{Provenance and Numerical Audit}
+\label{sec:credibility_audit}
+
+The preceding experiments answer whether BC-assisted direct TD-MPC2 can complete the
+evaluated task and where its behaviour changes. This section asks a different
+question: which parts of that evidence retain the same interpretation after
+the geometric sources and numerical settings are inspected?
+
+For the 288 matched-OOD evaluations, a separate audit program re-read the
+frozen JSONL traces, verified their hashes, and recomputed all 7,776 reported
+per-evaluation metric values from an independently implemented specification.
+The program imports neither the experimental analysis nor the finalizer or
+runner. Every value matched the stored summary, with no trace-hash or
+trace-identity mismatch. Here, independent refers to the metric-computation
+logic, not to an independently generated trajectory set.
+
+\subsection{Geometric and Disturbance Provenance}
+
+Table~\ref{tab:provenance} separates information available before action
+selection from information that would be available through a physical sensing
+stack. The controller is time-causal, but it uses simulator state and a
+registered nominal surface model. The latter supplies the local frame for both
+observations and action execution; it is not inferred by TD-MPC2.
+
+\begin{table*}[t]
+\centering
+\caption{Sources of quantities used by the controller and evaluator.}
+\label{tab:provenance}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}p{0.18\textwidth}p{0.25\textwidth}p{0.47\textwidth}@{}}
+\toprule
+Quantity & Source & Role and interpretation \\
+\midrule
+Normal force and rate & Simulator contact readback & Observation, routing, and force metrics \\
+Tool pose and velocity & Simulator state & Surface-relative observation \\
+Path tangent and surface normal & Registered nominal model & Observation frame and Cartesian action map \\
+Progress and contact dose & Synthetic task state & Observation and completion proxy \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+A separate claim--binding audit covered all controlled and OOD block labels.
+The physical call chains for the designated lateral and normal impulses were
+present. By contrast, the audit did not establish that the declared reference
+noise and delayed sensor noise in two controlled and two OOD blocks reached
+the learner-visible force path. Those labels are therefore not used as
+evidence of noise robustness.
+
+\subsection{Outcome-Specific Numerical Sensitivity}
+
+All four 12~N OOD baseline sentinels reproduced their archived traces within the
+prespecified tolerance. Supplementary Tables S2 and S3 expose all 32 paired
+intervention cells.
+Each force entry is the candidate peak in
+newtons, followed by three pass bits for task, tracking, and the force limit.
+The sentinel headers give the corresponding reproduced-baseline values. An
+arrow marks a trigger of the prespecified material peak/threshold rule and its
+direction; an unmarked value did not trigger the rule. Status changes relative
+to baseline are summarized below from the same paired cells.
+
+The rule triggered in 11/32 cells. Task-success status changed in three cells,
+tracking status in two, and sampled force-limit status in two. Ten of the
+eleven material peak responses were reductions. The remaining response was an
+increase that crossed the 15~N threshold.
+
+Aggregate pass--fail counts alone mask these cell-level outcome switches.
+Repeating each block's
+baseline outcome across the eight interventions gives 16 task, 16 tracking,
+and 16 force-limit passes. The candidates give 15, 16, and 16, respectively,
+despite the paired cell-level changes in
+the complete cell tables in the Supplementary Material.
+The relevant finding is therefore outcome-specific sensitivity, not a binary
+division between invariant task results and unstable force results.
+
+All twelve requested source arc counts reached the mesh factory, but PhysX
+convex cooking returned baseline-equivalent collision payloads in eleven
+cells (Supplementary Material). Only the 96-segment F4 request
+changed the topology, from 14 vertices and 24 triangles to 16 and 28, and produced the
+arm's sole material peak response. The arm thus records request-to-collision
+mapping rather than multilevel mesh convergence. The 0.080~mm analytical
+source-mesh sagitta bound makes penetration-depth error unlikely as the sole explanation.
+Position iterations and contact offset also affect selected sentinels; physics
+substeps remain fixed in this 100~Hz, one-step panel.
+
+\subsection{Resulting Evidence Boundaries}
+
+Table~\ref{tab:evidence_boundaries} states the paper's principal conclusions
+at the level supported by their evidence. The controlled experiments remain
+the main demonstration that the complete BC-assisted TD-MPC2 recipe can
+complete the evaluated ForceWipe task through direct deployment. The audit
+changes the interpretation of selected force-tail and disturbance claims; it
+does not replace that capability result.
+
+\begin{table*}[t]
+\centering
+\caption{Claim-specific evidence after the provenance and numerical audit.
+Counts refer to the 225 controlled evaluations, 90 full-TD-MPC2 OOD
+evaluations, 45 cross-engine evaluations, or 32 paired numerical-intervention
+cells identified in each row.}
+\label{tab:evidence_boundaries}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}p{0.22\textwidth}p{0.35\textwidth}p{0.34\textwidth}@{}}
+\toprule
+Conclusion & Supported statement & Boundary \\
+\midrule
+Controlled completion & BC-assisted TD-MPC2 completed 225/225 first-pass evaluations & Exact for the frozen controlled configuration; not a physical deployment claim \\
+Controlled tracking & 223/225 met the force-tracking criteria; the 12~N tier was biased low & Completion and precise regulation remain distinct \\
+Weak-curvature transfer & Task and tracking passes fell to 39/90 and 37/90 & Combined block shift; individual causes are not isolated \\
+Force tails & Recorded peaks and exceedances describe the baseline numerical configuration & Material peak/threshold responses occurred in 11/32 12~N OOD sentinel cells \\
+MPPI contribution & Task and tracking intervals crossed zero; host planning time increased by 50.96~ms & Same-checkpoint comparison under the frozen configuration; no general peak-force claim \\
+Noise robustness & No claim retained for the four unverified reference/sensor-noise labels & Declared effects were not shown to reach the learner-visible path \\
+Cross-engine portability & MuJoCo retained 30/30 compound passes on flat and inclined surfaces but 0/15 on the cylinder & Zero-shot stress test under a documented tangential calibration mismatch; not solver equivalence or hardware evidence \\
+\bottomrule
+\end{tabular}
+\end{table*}

@@ -1,0 +1,385 @@
+{
+  "format": "forcewipe_v19_manuscript_experiment_number_audit_v1",
+  "status": "PASS",
+  "checks_passed": 94,
+  "checks_total": 94,
+  "checks": [
+    {
+      "check": "factor-separated Cartesian product is 270",
+      "pass": true
+    },
+    {
+      "check": "factor-separated result has 270 rows",
+      "pass": true
+    },
+    {
+      "check": "factor-separated evaluation keys are unique",
+      "pass": true
+    },
+    {
+      "check": "factor-separated study contains all five frozen seeds",
+      "pass": true
+    },
+    {
+      "check": "factor-separated study contains all three targets",
+      "pass": true
+    },
+    {
+      "check": "compound-pass counts are 85/135 and 100/135",
+      "pass": true
+    },
+    {
+      "check": "task-success counts are 133/135 and 132/135",
+      "pass": true
+    },
+    {
+      "check": "tracking-pass counts are 85/135 and 100/135",
+      "pass": true
+    },
+    {
+      "check": "both final arms contain two samples above 15 N",
+      "pass": true
+    },
+    {
+      "check": "compound-pass difference is 11.11 percentage points",
+      "pass": true
+    },
+    {
+      "check": "compound-pass 95% interval is [3.70, 18.52] percentage points",
+      "pass": true
+    },
+    {
+      "check": "adaptive planner reduces mean MRE",
+      "pass": true
+    },
+    {
+      "check": "adaptive planner reduces median planning time",
+      "pass": true
+    },
+    {
+      "check": "adaptive planner does not improve observed peak force",
+      "pass": true
+    },
+    {
+      "check": "controlled suites contain 75 and 150 evaluations",
+      "pass": true
+    },
+    {
+      "check": "controlled evidence contains 225 evaluations",
+      "pass": true
+    },
+    {
+      "check": "controlled task completion is 225/225",
+      "pass": true
+    },
+    {
+      "check": "controlled tracking pass is 223/225",
+      "pass": true
+    },
+    {
+      "check": "full TD-MPC2 OOD result is 39/90 task and 37/90 tracking",
+      "pass": true
+    },
+    {
+      "check": "BC grid is exactly {0, 0.5, 2}",
+      "pass": true
+    },
+    {
+      "check": "BC=0 produces 15/15 no-contact development evaluations",
+      "pass": true
+    },
+    {
+      "check": "BC=2 produces 15/15 task success and zero sampled-limit violations",
+      "pass": true
+    },
+    {
+      "check": "numerical panel triggers in 11/32 intervention cells",
+      "pass": true
+    },
+    {
+      "check": "numerical responses comprise ten reductions and one increase",
+      "pass": true
+    },
+    {
+      "check": "PPO 1x/2x/4x budgets are exact geometric multiples",
+      "pass": true
+    },
+    {
+      "check": "PPO design has seven profiles and nine profile-budget endpoints",
+      "pass": true
+    },
+    {
+      "check": "PPO design contains 45 checkpoints and 810 DEV evaluations",
+      "pass": true
+    },
+    {
+      "check": "PPO DEV selection contains all 810 evaluations and nine endpoints",
+      "pass": true
+    },
+    {
+      "check": "PPO selection chooses clip 0.1 at 2x without final-set selection",
+      "pass": true
+    },
+    {
+      "check": "selected PPO DEV endpoint is 3/11/6/79/90",
+      "pass": true
+    },
+    {
+      "check": "PPO frozen confirmation contains 225 evaluations",
+      "pass": true
+    },
+    {
+      "check": "PPO confirmation identities are unique",
+      "pass": true
+    },
+    {
+      "check": "selected PPO is 0/90 task, tracking, and compound on weak curvature",
+      "pass": true
+    },
+    {
+      "check": "selected PPO is 19/135 task, 8/135 tracking, and 6/135 compound",
+      "pass": true
+    },
+    {
+      "check": "PPO confirmation has 64 samples above 15 N and 22.113 N maximum",
+      "pass": true
+    },
+    {
+      "check": "all six PPO confirmation compound passes occur in seed 305",
+      "pass": true
+    },
+    {
+      "check": "cross-simulator R3 actuator calibration is policy-independent",
+      "pass": true
+    },
+    {
+      "check": "cross-simulator R3 records the residual held-out mismatch",
+      "pass": true
+    },
+    {
+      "check": "cross-simulator R3 held-out force NRMSE values are exact",
+      "pass": true
+    },
+    {
+      "check": "cross-simulator R3 held-out position RMSE values are exact",
+      "pass": true
+    },
+    {
+      "check": "R3 passes the normal cycle but retains tangential mismatch",
+      "pass": true
+    },
+    {
+      "check": "zero-shot MuJoCo stress test completes all 45 evaluations",
+      "pass": true
+    },
+    {
+      "check": "zero-shot MuJoCo evaluation identities are unique",
+      "pass": true
+    },
+    {
+      "check": "MuJoCo aggregate is 30/45 on all four gates",
+      "pass": true
+    },
+    {
+      "check": "matched PhysX aggregate is 42/24/43/24 out of 45",
+      "pass": true
+    },
+    {
+      "check": "MuJoCo B0 compound count is 15/15",
+      "pass": true
+    },
+    {
+      "check": "MuJoCo S1 compound count is 15/15",
+      "pass": true
+    },
+    {
+      "check": "MuJoCo S2 compound count is 0/15",
+      "pass": true
+    },
+    {
+      "check": "MuJoCo stress test records 15 sampled violations and 20.244 N maximum",
+      "pass": true
+    },
+    {
+      "check": "zero-shot MuJoCo independent audit passes 12/12",
+      "pass": true
+    },
+    {
+      "check": "deployment-gap design adds 375 and reuses 45 nominal evaluations",
+      "pass": true
+    },
+    {
+      "check": "deployment-gap real SAPIEN binding passes 7/7 checks",
+      "pass": true
+    },
+    {
+      "check": "deployment-gap run completes all 375 new evaluations",
+      "pass": true
+    },
+    {
+      "check": "deployment-gap completed identities are unique",
+      "pass": true
+    },
+    {
+      "check": "deployment-gap aggregate task, tracking, and compound counts close",
+      "pass": true
+    },
+    {
+      "check": "deployment-gap aggregate force-tail metrics close",
+      "pass": true
+    },
+    {
+      "check": "deployment-gap analysis reports 375 new and 45 reused evaluations",
+      "pass": true
+    },
+    {
+      "check": "deployment-gap condition and interval panels are complete",
+      "pass": true
+    },
+    {
+      "check": "deployment-gap independent trace audit passes in full",
+      "pass": true
+    },
+    {
+      "check": "manuscript includes the audited deployment-gap endpoint table",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 225/225",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 223/225",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 39/90",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 37/90",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 85",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 100",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 11.11",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 3.70",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 18.52",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 11/32",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 82,774",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 4,000",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 1600",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 3400",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 0.3",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 0.7",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 1.2",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 15\\%",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 20\\%",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 165,548",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 3/90",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 11/90",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 0/90",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 19/135",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 6/135",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 7.16",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 9.37",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 0.337",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 0.833",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 30/30",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 0/15",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 20.24",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 375+45",
+      "pass": true
+    },
+    {
+      "check": "manuscript contains audited literal 420",
+      "pass": true
+    }
+  ],
+  "scope": "Core frozen design and result claims currently present in the manuscript. It additionally validates the completed PPO budget and sensitivity outcomes, the R3 cross-simulator calibration, the completed zero-shot MuJoCo stress test, and the deployment-gap panel with independent audits."
+}

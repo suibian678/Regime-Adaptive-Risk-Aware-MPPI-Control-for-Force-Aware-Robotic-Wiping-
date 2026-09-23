@@ -1,0 +1,182 @@
+{
+  "endpoints": [
+    {
+      "authority_passes": 90,
+      "budget_multiplier": 1,
+      "completed_dose_bins": 514,
+      "compound_passes": 0,
+      "evaluations": 90,
+      "mean_episode_return": -8.39591815172745,
+      "profile_id": "default",
+      "safety_passes": 89,
+      "selection_key": [
+        0,
+        8,
+        514,
+        -755.6326336554705,
+        0
+      ],
+      "task_successes": 8,
+      "tracking_passes": 4
+    },
+    {
+      "authority_passes": 90,
+      "budget_multiplier": 2,
+      "completed_dose_bins": 608,
+      "compound_passes": 0,
+      "evaluations": 90,
+      "mean_episode_return": -8.771218394858574,
+      "profile_id": "default",
+      "safety_passes": 79,
+      "selection_key": [
+        0,
+        9,
+        608,
+        -789.4096555372716,
+        -1
+      ],
+      "task_successes": 9,
+      "tracking_passes": 0
+    },
+    {
+      "authority_passes": 90,
+      "budget_multiplier": 4,
+      "completed_dose_bins": 586,
+      "compound_passes": 1,
+      "evaluations": 90,
+      "mean_episode_return": -22.138752381838277,
+      "profile_id": "default",
+      "safety_passes": 87,
+      "selection_key": [
+        1,
+        4,
+        586,
+        -1992.4877143654448,
+        -2
+      ],
+      "task_successes": 4,
+      "tracking_passes": 8
+    },
+    {
+      "authority_passes": 90,
+      "budget_multiplier": 2,
+      "completed_dose_bins": 1117,
+      "compound_passes": 1,
+      "evaluations": 90,
+      "mean_episode_return": 5.095409540339604,
+      "profile_id": "lr_1e-4",
+      "safety_passes": 87,
+      "selection_key": [
+        1,
+        16,
+        1117,
+        458.5868586305644,
+        -3
+      ],
+      "task_successes": 16,
+      "tracking_passes": 6
+    },
+    {
+      "authority_passes": 90,
+      "budget_multiplier": 2,
+      "completed_dose_bins": 539,
+      "compound_passes": 1,
+      "evaluations": 90,
+      "mean_episode_return": -16.166817179132742,
+      "profile_id": "lr_1e-3",
+      "safety_passes": 70,
+      "selection_key": [
+        1,
+        4,
+        539,
+        -1455.0135461219468,
+        -4
+      ],
+      "task_successes": 4,
+      "tracking_passes": 7
+    },
+    {
+      "authority_passes": 90,
+      "budget_multiplier": 2,
+      "completed_dose_bins": 861,
+      "compound_passes": 3,
+      "evaluations": 90,
+      "mean_episode_return": -0.9936482896897006,
+      "profile_id": "clip_0p1",
+      "safety_passes": 79,
+      "selection_key": [
+        3,
+        11,
+        861,
+        -89.42834607207305,
+        -5
+      ],
+      "task_successes": 11,
+      "tracking_passes": 6
+    },
+    {
+      "authority_passes": 90,
+      "budget_multiplier": 2,
+      "completed_dose_bins": 789,
+      "compound_passes": 0,
+      "evaluations": 90,
+      "mean_episode_return": -1.9839497652382911,
+      "profile_id": "clip_0p3",
+      "safety_passes": 88,
+      "selection_key": [
+        0,
+        13,
+        789,
+        -178.5554788714462,
+        -6
+      ],
+      "task_successes": 13,
+      "tracking_passes": 5
+    },
+    {
+      "authority_passes": 90,
+      "budget_multiplier": 2,
+      "completed_dose_bins": 452,
+      "compound_passes": 0,
+      "evaluations": 90,
+      "mean_episode_return": -12.013561021444714,
+      "profile_id": "entropy_0",
+      "safety_passes": 90,
+      "selection_key": [
+        0,
+        8,
+        452,
+        -1081.2204919300243,
+        -7
+      ],
+      "task_successes": 8,
+      "tracking_passes": 0
+    },
+    {
+      "authority_passes": 90,
+      "budget_multiplier": 2,
+      "completed_dose_bins": 374,
+      "compound_passes": 0,
+      "evaluations": 90,
+      "mean_episode_return": -18.998229299514595,
+      "profile_id": "entropy_0p01",
+      "safety_passes": 89,
+      "selection_key": [
+        0,
+        5,
+        374,
+        -1709.8406369563136,
+        -8
+      ],
+      "task_successes": 5,
+      "tracking_passes": 7
+    }
+  ],
+  "evaluations": 810,
+  "final_sets_used_for_selection": false,
+  "format": "forcewipe_v19_ppo_sensitivity_dev_selection_v1",
+  "selected_budget_multiplier": 2,
+  "selected_profile_id": "clip_0p1",
+  "selection_rule": "compound, task, bins, return, frozen endpoint order",
+  "status": "completed"
+}

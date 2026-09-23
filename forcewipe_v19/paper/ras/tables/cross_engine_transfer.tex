@@ -1,0 +1,20 @@
+\begin{table*}[t]
+\centering
+\caption{Zero-shot cross-engine stress results on matched checkpoint--block--target keys. Counts are out of 15 evaluations per block.}
+\label{tab:cross_engine_transfer}
+\scriptsize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{0.95}
+\begin{tabular}{@{}llrrrrr@{}}
+\toprule
+Engine & Block & Task & Tracking & Sampled safety & Compound & Max. peak (N) \\
+\midrule
+PhysX  & Flat reference       & 15 & 11 & 15 & 11 & 13.09 \\
+MuJoCo & Flat reference       & 15 & 15 & 15 & 15 & 13.32 \\
+PhysX  & $10^\circ$ incline  & 15 &  7 & 15 &  7 & 12.30 \\
+MuJoCo & $10^\circ$ incline  & 15 & 15 & 15 & 15 & 13.20 \\
+PhysX  & Cylinder, $r=1.2$~m & 12 &  6 & 13 &  6 & 17.90 \\
+MuJoCo & Cylinder, $r=1.2$~m &  0 &  0 &  0 &  0 & 20.24 \\
+\bottomrule
+\end{tabular}
+\end{table*}

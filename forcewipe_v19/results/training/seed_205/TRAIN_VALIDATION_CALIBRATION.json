@@ -1,0 +1,41 @@
+{
+  "claim_boundary": "TRAIN-validation inference only; no simulator evaluation.",
+  "completed_utc": "2026-09-19T14:43:37.096763Z",
+  "coverage": 0.9,
+  "format": "forcewipe_v19_trained_seed_calibration_v1",
+  "run_id": "v19_force_conditioned_seed205_bc2_u4000",
+  "target_condition_pairwise_l2": [
+    1.011798620223999,
+    1.1570323705673218,
+    1.0678205490112305
+  ],
+  "target_conditions_distinct": true,
+  "targets": {
+    "12": {
+      "absolute_residual_p95_n": 2.8480091094970703,
+      "calibrated_radius_n": 1.3877239227294922,
+      "empirical_coverage": 0.9005736112594604,
+      "samples": 2092,
+      "upper_predictor_bias_n": 0.7652279734611511,
+      "upper_predictor_rmse_n": 1.0947321653366089
+    },
+    "5": {
+      "absolute_residual_p95_n": 0.8384434580802917,
+      "calibrated_radius_n": 0.5614972114562988,
+      "empirical_coverage": 0.9006471037864685,
+      "samples": 2627,
+      "upper_predictor_bias_n": 0.20440201461315155,
+      "upper_predictor_rmse_n": 0.5156781077384949
+    },
+    "8": {
+      "absolute_residual_p95_n": 1.5802006721496582,
+      "calibrated_radius_n": 1.1289385557174683,
+      "empirical_coverage": 0.9005047082901001,
+      "samples": 2774,
+      "upper_predictor_bias_n": 0.4005005359649658,
+      "upper_predictor_rmse_n": 0.800164520740509
+    }
+  },
+  "validation_episodes": 8,
+  "validation_transitions": 7493
+}

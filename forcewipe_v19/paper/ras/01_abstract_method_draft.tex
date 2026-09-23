@@ -1,0 +1,20 @@
+\begin{abstract}
+Force-aware wiping requires contact acquisition, force regulation, transient
+control, and surface progression. We introduce regime-adaptive risk-aware
+model-predictive path integral (MPPI) planning for direct temporal-difference
+model-predictive control (TD-MPC2) wiping. The method retains requested force
+in latent dynamics and adapts planning costs and computation from causal
+contact regimes and learned next-force predictions. Across 270 paired
+factor-separated evaluations, it raises compound pass from 85/135 to 100/135
+(+11.11 percentage points; block- and seed-aware 95\% interval [3.70, 18.52]),
+reduces mean relative error by 1.83 points, and uses 8.0 fewer samples and
+25.7~ms less median planning time. Task completion remains 132/135 versus
+133/135, and both planners record two samples above 15~N. A 375-run one-factor
+panel identifies force bias, 50-ms delay, and registered-normal error as
+distinct sensitivities. In a zero-shot MuJoCo stress test, all 30 flat and
+inclined evaluations retain the compound outcome, whereas none of 15 weakly
+curved evaluations does. Regime adaptation therefore improves the
+tracking--computation trade-off in simulation, while curved contact remains
+the principal portability boundary.
+% Insert the stable anonymous artifact URL here after double-blind deposition.
+\end{abstract}

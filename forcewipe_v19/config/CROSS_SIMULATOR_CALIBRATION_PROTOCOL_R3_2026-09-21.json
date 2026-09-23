@@ -1,0 +1,55 @@
+{
+  "format": "forcewipe_v19_cross_simulator_calibration_protocol_r3_v1",
+  "status": "FROZEN_BEFORE_NEW_HELD_OUT_EXECUTION",
+  "supersedes": "CROSS_SIMULATOR_CALIBRATION_PROTOCOL_R2_2026-09-20.json",
+  "revision_reason": "R2 modelled Panda execution mismatch as a constant action gain. Policy-free free-space pulses instead resolved a causal two-sample delay plus an 80-ms first-order response. Previously exposed contact motions then identified the MuJoCo implementation scale required for the same declared tool-drive stiffness.",
+  "research_question": "Does the revised transparent MuJoCo task port reproduce new policy-independent PhysX motions closely enough to permit frozen-checkpoint zero-shot evaluation?",
+  "scope": "Cross-engine simulation robustness; not hardware validation, Sim2Real evidence, or full Panda robot equivalence.",
+  "policy_checkpoint_used_for_calibration": false,
+  "development_data": {
+    "actuator_fit_motions": [
+      "fit_free_space_normal_return",
+      "fit_free_space_tangent_reversal",
+      "fit_free_space_cross_reversal"
+    ],
+    "previously_exposed_contact_motions": [
+      "fit_light_load_hold_release",
+      "fit_medium_load_hold_release",
+      "validation_contact_tangent_release",
+      "validation_medium_unload"
+    ],
+    "actuator_fit_result_sha256": "942707e8e19620e94e0f3a5dcf28179cda2061a1c2df5d794997078fc650c89c",
+    "contact_fit_result_sha256": "f172854c4374b7866a5aab26069b6118995da6d6949779352617606e7d4d5452"
+  },
+  "new_held_out_validation_motions": [
+    "validation_multilevel_normal_cycle",
+    "validation_bidirectional_tangent_release"
+  ],
+  "frozen_contact_config": {
+    "physics_timestep_s": 0.001,
+    "control_timestep_s": 0.01,
+    "contact_time_constant_s": 0.03,
+    "contact_damping_ratio": 0.5,
+    "contact_margin_m": 0.0035,
+    "contact_impedance_min": 0.9,
+    "contact_impedance_max": 0.95,
+    "contact_impedance_width_m": 0.001,
+    "solver_iterations": 50,
+    "actuation_gain": 1.0,
+    "actuation_time_constant_s": 0.08,
+    "actuation_delay_steps": 2,
+    "tool_drive_scale": 0.8,
+    "support_drive_scale": 1.0
+  },
+  "source_identities": {
+    "mujoco_crosssim_env_sha256": "08ed7fbe579e874c2a9715baae9595a0cc7034fb4575afa354bce2000c166f81",
+    "motion_definition_sha256": "29524cc6b4bcf9012bb5ccdce8bd709b93ea83ec8dc373d657d2d4bf107b25ef"
+  },
+  "validation_tolerances": {
+    "contact_force_nrmse": 0.2,
+    "tool_displacement_rmse_m": 0.0005,
+    "contact_onset_absolute_error_samples_at_100hz": 5,
+    "peak_force_relative_error": 0.2
+  },
+  "decision_rule": "Both new held-out motions must satisfy every frozen tolerance. A pass permits a separate zero-shot checkpoint study; a failure blocks policy deployment and is reported without tuning on these motions."
+}

@@ -1,0 +1,38 @@
+\section{Method Development Results}
+\label{sec:development_results}
+
+All four planner arms completed all 60 development evaluations, with no
+sample above 15~N. Table~\ref{tab:component_ablation_dev} shows that adaptive
+objective and compute each recover part of the fixed-planner gap, while their
+combination gives the lowest mean relative error (MRE) and normalised
+root-mean-square error (NRMSE). The complete method reduces 12~N RMSE from
+2.927 to 2.600~N and raises mean force from 9.308 to 9.714~N, although the
+strict 12~N tracking gate remains 0/5 for every arm.
+
+\begin{table*}[t]
+\centering
+\caption{Matched planner-component development ablation. MRE and NRMSE are
+averaged over 15 seed--target evaluations per arm.}
+\label{tab:component_ablation_dev}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Arm & MRE (\%) & NRMSE (\%) & Samples & Median time (ms) \\
+\midrule
+M1: fixed objective, fixed compute & 12.03 & 14.66 & 128.0 & 112.18 \\
+M2: adaptive objective             & 10.94 & 13.77 & 128.0 & 107.86 \\
+M3: adaptive compute               & 10.26 & 13.52 & 121.2 &  80.58 \\
+M4: complete method                &  9.65 & 12.94 & 120.4 &  83.25 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+A behaviour-cloning (BC) coefficient of 2 completes all 15 development runs
+without a sampled violation; removing BC prevents contact in all 15, whereas
+coefficient 0.5 yields 12/15 task passes and two samples above 15~N. Router
+thresholds change planner use smoothly rather than revealing a discrete
+operating point. The stable MPPI segment contains most of the 12~N negative
+bias, and alternate risk representations do not improve the frozen
+force-only representation. Complete development tables and sample-level
+decompositions are provided in the Supplementary Material.
+

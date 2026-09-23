@@ -1,0 +1,22 @@
+{
+  "environment_transitions_per_seed": 82774,
+  "final_evaluations": 90,
+  "final_task_successes": 0,
+  "format": "forcewipe_v19_ppo_training_fairness_analysis_v1",
+  "interpretation": "This is a matched simulator-transition and deployment-interface baseline, not an algorithm-independent sample-efficiency comparison.",
+  "optimizer_update_counts_are_not_matched": true,
+  "ppo_is_online_on_policy": true,
+  "same_environment_transition_budget_as_tdmpc2_source": true,
+  "seeds": [
+    301,
+    302,
+    303,
+    304,
+    305
+  ],
+  "shared_deployment_observation_and_action_interface": true,
+  "tdmpc2_uses_the_frozen_offline_source_dataset": true,
+  "training_episodes_total": 645,
+  "training_force_violation_episodes_total": 470,
+  "training_task_successes_total": 3
+}

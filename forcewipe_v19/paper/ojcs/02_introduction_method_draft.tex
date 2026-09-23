@@ -1,0 +1,64 @@
+\section{Introduction}
+\label{sec:introduction}
+
+Robotic wiping is a contact-rich control problem in which geometric progress
+and force regulation must succeed together. The tool must first acquire the
+surface, approach a requested load without a large transient, maintain useful
+contact during motion, and recover when contact is lost. These phases place
+different demands on a controller. Contact acquisition rewards decisive
+inward motion, stable tracking rewards accurate force regulation, and rapid
+force growth calls for conservative action. A planning objective and sampling
+budget that remain fixed throughout an episode need not serve all three
+requirements equally well.
+
+Temporal-difference model-predictive control (TD-MPC2) offers a natural basis
+for this problem: a learned actor provides a policy prior, while a latent
+world model evaluates action sequences online
+\cite{hansen2024tdmpc2,williams2018information}. Earlier ForceWipe experiments
+showed that behaviour-cloning (BC)-assisted TD-MPC2 could complete controlled
+first-pass wiping directly at 5, 8, and 12~N. They also exposed three limits.
+First, a hard measured-force threshold routed between the actor and planner
+without adapting the planning objective itself. Second, the 12~N tier retained
+a systematic negative force bias. Third, the matched actor-only comparison
+did not resolve a general performance benefit from online planning despite a
+clear computation cost. These observations motivate a method that changes
+what the planner optimizes and how much it searches, rather than merely
+changing when planning is enabled.
+
+We introduce regime-adaptive risk-aware MPPI (RA-RMPPI), a unified planner for
+direct TD-MPC2 wiping. The requested force is encoded by a dedicated condition
+branch and retained through imagined latent transitions. Learned next-force
+predictions provide a causal risk signal. Smooth causal memberships represent
+acquisition, approach, tracking, recovery, and transient risk. They
+continuously adjust contact, tracking, transient, and actor-anchor costs
+together with the MPPI sample count, optimization
+iterations, and exploration scale. The actor remains the proposal
+distribution in every regime; the historical hard actor--planner switch is
+removed.
+
+The empirical design separates method selection from evaluation. Five
+unfiltered seeds share the same data and update budget. A four-arm ablation
+isolates adaptive objectives and adaptive computation, while additional
+ablations examine behaviour-cloning strength, transient-risk representation,
+and the historical routing threshold. The method is then evaluated on new
+factor-separated shifts in surface geometry and contact dynamics, avoiding
+the path--surface--tool confounding of the earlier combined
+out-of-distribution (OOD) blocks. Across 270 paired evaluations, the complete
+method raises compound pass from 85/135 to
+100/135 while using fewer planning samples and less host planning time. The
+gain is concentrated in force regulation: task completion and sampled force
+violations do not improve, and the cylindrical 12~N condition remains a
+failure boundary. A zero-shot MuJoCo stress test sharpens that boundary: all
+30 flat and inclined evaluations retain the compound outcome, whereas none of
+the 15 cylindrical evaluations does.
+
+The paper makes three contributions. First, it presents a force-conditioned
+latent dynamics construction that preserves the requested force during
+multi-step imagination. Second, it develops a regime-adaptive risk objective
+and compute schedule that unifies acquisition, tracking, and recovery without
+a discrete actor--planner router. Third, it provides matched component and
+training ablations, including negative evidence for a more elaborate
+transient-envelope representation, together with factor-separated and
+cross-engine simulation evaluation. The resulting evidence identifies a
+statistically resolved tracking--computation improvement while preserving the
+method's unresolved curvature and force-tail limits.

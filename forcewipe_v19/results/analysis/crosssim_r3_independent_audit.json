@@ -1,0 +1,168 @@
+{
+  "axis_metrics": [
+    {
+      "axis_position_rmse_m": [
+        0.0002399456191072045,
+        1.0684895208904213e-05,
+        0.0002905289019919438
+      ],
+      "combined_position_rmse_m": 0.00037695505038002806,
+      "motion_id": "fit_light_load_hold_release",
+      "mujoco_sha256": "f92164ae9f452488683d71f3a709c712d95759c36e123f2f1e1357baf0383944",
+      "physx_sha256": "99655c14e8f2b3bef8e243dc817fcd152b986b3297e76071f84acd24f61c6d30",
+      "role": "development"
+    },
+    {
+      "axis_position_rmse_m": [
+        0.000231725265414682,
+        1.9433179995027494e-05,
+        0.00042110265421945755
+      ],
+      "combined_position_rmse_m": 0.0004810422980434216,
+      "motion_id": "fit_medium_load_hold_release",
+      "mujoco_sha256": "06fae7c302680fbbd7a471e78f94b10b0ad95dc9b5099137bc7a4d303e5a01c7",
+      "physx_sha256": "6d9f63236c03676d742cc3b80e0cb624a134dbad5bd87bb767a02e7932f091cd",
+      "role": "development"
+    },
+    {
+      "axis_position_rmse_m": [
+        0.0002733889080735168,
+        0.00012001462975193374,
+        0.000328433586496759
+      ],
+      "combined_position_rmse_m": 0.0004438621713451684,
+      "motion_id": "validation_contact_tangent_release",
+      "mujoco_sha256": "0f5f873ffa9f1acc220e97313b48a89c44d86c743760b5e3e01947b90a2ee582",
+      "physx_sha256": "a76b7d9fada296ea5a8ff214b31eb4530e1b1ee5ceb9d28de048df89df39326f",
+      "role": "development"
+    },
+    {
+      "axis_position_rmse_m": [
+        0.00024827541580513506,
+        3.162293657981813e-05,
+        0.00039408395297076126
+      ],
+      "combined_position_rmse_m": 0.00046684350075823603,
+      "motion_id": "validation_medium_unload",
+      "mujoco_sha256": "50a3bc0d93e29530c96e00779b04076a3a98f24b564a92ec3f52eb9c8f84ca04",
+      "physx_sha256": "d75dcd2472acccaf8c99a783b0b4f845f3f73bf4f970ff9abd8d5a3e7aa9b3cd",
+      "role": "development"
+    },
+    {
+      "axis_position_rmse_m": [
+        0.00022108750830822696,
+        1.5095966174318514e-05,
+        0.00025425879518244446
+      ],
+      "combined_position_rmse_m": 0.00033727601375180055,
+      "motion_id": "validation_multilevel_normal_cycle",
+      "mujoco_sha256": "9eca2e212c0145521b0065b2c15f9a723558d3def18cddd45889cee5bedf785b",
+      "physx_sha256": "458d50dcda6cbe14bd982948474ef96b64ec799534b50077c969abdbf65161d2",
+      "role": "validation"
+    },
+    {
+      "axis_position_rmse_m": [
+        0.0007756729893004457,
+        0.00010963500204755817,
+        0.0002838136048986984
+      ],
+      "combined_position_rmse_m": 0.0008332098069093114,
+      "motion_id": "validation_bidirectional_tangent_release",
+      "mujoco_sha256": "584d3a6a6e8dfa71ed7d4b047a22350f665c0993ce66544c592e998ee047fc5f",
+      "physx_sha256": "f27eafb29c5eef1dd07077cd4a3d19e5c0a565b41d58919374bc56e812f86293",
+      "role": "validation"
+    }
+  ],
+  "checks": [
+    {
+      "check": "terminal status",
+      "evidence": "completed_validation_fail",
+      "pass": true
+    },
+    {
+      "check": "no checkpoint",
+      "evidence": false,
+      "pass": true
+    },
+    {
+      "check": "development passed",
+      "evidence": {
+        "maximum_tolerance_ratio": 0.9620845960868432,
+        "mean_tolerance_ratio": 0.5452652607898991,
+        "motions": 4,
+        "within_all_tolerances": true
+      },
+      "pass": true
+    },
+    {
+      "check": "held-out failed",
+      "evidence": {
+        "maximum_tolerance_ratio": 1.6664196138186227,
+        "mean_tolerance_ratio": 0.6381200253839101,
+        "motions": 2,
+        "within_all_tolerances": false
+      },
+      "pass": true
+    },
+    {
+      "check": "position metric fit_light_load_hold_release",
+      "evidence": {
+        "recomputed": 0.00037695505038002806,
+        "stored": 0.00037695505038002806
+      },
+      "pass": true
+    },
+    {
+      "check": "position metric fit_medium_load_hold_release",
+      "evidence": {
+        "recomputed": 0.0004810422980434216,
+        "stored": 0.0004810422980434216
+      },
+      "pass": true
+    },
+    {
+      "check": "position metric validation_contact_tangent_release",
+      "evidence": {
+        "recomputed": 0.0004438621713451684,
+        "stored": 0.0004438621713451684
+      },
+      "pass": true
+    },
+    {
+      "check": "position metric validation_medium_unload",
+      "evidence": {
+        "recomputed": 0.00046684350075823603,
+        "stored": 0.00046684350075823603
+      },
+      "pass": true
+    },
+    {
+      "check": "position metric validation_multilevel_normal_cycle",
+      "evidence": {
+        "recomputed": 0.00033727601375180055,
+        "stored": 0.00033727601375180055
+      },
+      "pass": true
+    },
+    {
+      "check": "position metric validation_bidirectional_tangent_release",
+      "evidence": {
+        "recomputed": 0.0008332098069093114,
+        "stored": 0.0008332098069093114
+      },
+      "pass": true
+    },
+    {
+      "check": "single held-out failure",
+      "evidence": [
+        "validation_bidirectional_tangent_release"
+      ],
+      "pass": true
+    }
+  ],
+  "checks_passed": 11,
+  "checks_total": 11,
+  "format": "forcewipe_v19_crosssim_r3_independent_audit_v1",
+  "result_sha256": "b1babdc29d3a26c47fa18f3f24d238a0a8a3e9e497a1ab11bce59509dd829ae3",
+  "status": "PASS"
+}

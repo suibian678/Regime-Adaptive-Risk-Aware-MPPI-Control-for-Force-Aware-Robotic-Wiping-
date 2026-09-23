@@ -1,0 +1,138 @@
+\section{Related Work}
+\label{sec:related_work}
+
+This study connects robotic surface processing, contact-force control, and
+model-based reinforcement learning. We position BC-assisted direct TD-MPC2 at their
+intersection and examine its operating envelope in force-aware wiping.
+
+\subsection{Robot Wiping, Cleaning, and Polishing}
+
+Surface-processing tasks combine geometric coverage with sustained physical
+interaction. Demonstration-driven systems structure this problem through
+learned interaction primitives or reusable representations. Probabilistic
+Surface Interaction Primitives (ProSIP) conditions compliant task-space
+motions on tool-centre-point (TCP) pose, local surface geometry, and
+context~\cite{unger2024prosip}; Adaptive Wiping combines few-shot imitation,
+force--torque feedback, and pre-trained object representations to adapt
+contact-rich execution across task variations~\cite{tsuji2025adaptivewiping}.
+
+Learned contact policies often retain structure in either the action space or
+the execution layer. Variable Impedance Control in End-Effector Space (VICES)
+treats variable end-effector impedance as a reinforcement-learning (RL)
+action space, evaluates it on path following, door opening, and surface wiping,
+and reports simulation-to-real transfer
+\cite{martinmartin2019vices}. Beltran-Hernandez \emph{et al.} combine RL with
+modified parallel position--force control or, separately, admittance control,
+and add a real-robot fail-safe
+\cite{beltranhernandez2020force}. Zhu \emph{et al.} couple an image-based
+policy for equilibrium-point and variable-impedance commands with a faster
+momentum-observer and contact-aware null-space controller
+\cite{zhu2022contactsafe}. Force-Guided Exploration for Robust Contact-Rich
+Manipulation under Uncertainty (FORGE) instead conditions assembly policies on
+a maximum allowable force and uses dynamics randomization for transfer from
+simulation to hardware~\cite{noseworthy2025forge}. These methods show how
+impedance, feedback, and force conditioning can structure learned contact
+behaviour. Our comparison places TD-MPC2 and proximal policy optimization
+(PPO) on a common direct Cartesian-delta interface, with adaptive admittance as a separate classical
+reference.
+
+The closest methods differ from ours along explicit modelling and deployment
+axes. VICES uses model-free RL to select variable impedance, whereas our
+controller learns latent dynamics and issues Cartesian displacements directly.
+Kleff \emph{et al.} incorporate measured force/torque feedback through an explicit
+robot-actuation model; our latent model is conditioned on scalar measured
+normal force but contains no analytical actuation or contact-force evolution
+model~\cite{kleff2022forcefeedbackmpc}. FORGE conditions policies on a maximum
+allowable force and uses dynamics randomization for sim-to-real assembly;
+our study instead examines first-pass wiping in simulation and audits the
+numerical support for each reported outcome~\cite{noseworthy2025forge}. The
+distinguishing combination is therefore a learned world model, direct Cartesian
+deployment, and claim-level numerical auditing, rather than a new impedance
+law, runtime shield, or hardware-transfer method.
+
+Liu \emph{et al.} study quality-critical wiping over randomised curvatures,
+frictions, and waypoints using a visual-language-model curriculum and a
+checkpoint-bounded reward~\cite{liu2025wipingvlm}. Their 20~Hz policy sends
+pose commands to an operational-space controller, with force tracked around a
+60~N target. Our complementary setting isolates direct learned Cartesian
+control at 5, 8, and 12~N across fixed simulation blocks, enabling trace-level
+analysis of completion, force regulation, and transfer.
+
+Curved-surface systems commonly treat tool alignment and force regulation as
+a coupled problem. Armesto \emph{et al.} reproduce a wiping policy learned on
+planes over an unknown curved surface by estimating the contact constraint and
+using force or torque feedback to align the tool~\cite{armesto2018constraintaware}.
+Li \emph{et al.} infer pose deviation from contact measurements, lift a
+predefined planar path onto an unknown three-dimensional workpiece, and close
+a separate normal-force loop~\cite{li2023unknownsurface}. These methods expose
+a distinction that matters in our results: our registered frame supplies a
+local normal, but the policy action in Eq.~\eqref{eq:task_frame_map} controls
+translation only. It cannot directly correct tool posture as the normal turns.
+
+\subsection{Hybrid Position/Force and Impedance Control}
+
+Hybrid position--force control separates motion and force objectives along
+different task directions~\cite{raibert1981hybrid}, while impedance control
+shapes the dynamic relation between motion and contact
+forces~\cite{hogan1985impedance}. Admittance control instead maps interaction
+force error into motion of a compliant reference. Impedance and admittance
+offer complementary interaction behaviours~\cite{ott2010unified}. We include
+an adaptive admittance baseline under the same time-causal observation and
+actuator action box. Its force-tier dependence motivates target-wise
+compound-pass reporting.
+
+Force-feedback model-predictive control (MPC) provides a closely related
+optimization-based alternative. Kleff \emph{et al.} introduce measured
+force/torque feedback by augmenting the predictive formulation with robot-actuation
+dynamics, and validate the controller on a humanoid upper body
+\cite{kleff2022forcefeedbackmpc}. Jordana \emph{et al.} estimate online the
+discrepancy between model-predicted and measured force, avoiding an explicit
+model of contact-force evolution, and demonstrate force tracking on a
+torque-controlled manipulator~\cite{jordana2024forcefeedbackmpc}. Both use
+dedicated force-feedback MPC formulations. We address the complementary
+question of what a learned actor and world model can achieve through a bounded
+Cartesian-displacement interface without a separate force-control layer.
+
+Runtime shields modify policy proposals before
+execution~\cite{alshiekh2018shielding}, and control barrier functions provide
+a route to forward-invariance conditions
+\cite{ames2019cbf,cheng2019rlcbf}. These mechanisms encode safety through
+explicit runtime structure. Our direct deployment instead evaluates learned
+Cartesian actions without an external shield or force-dependent
+post-processing. The resulting 100~Hz force traces provide empirical
+exceedance observations for the numerical configuration in which they were
+recorded; formal invariance lies outside the study, and
+Sec.~\ref{sec:credibility_audit} examines their setting sensitivity.
+
+Contact-rich simulation also depends on contact models, physical relaxations,
+and numerical solution methods whose application-level effects need not be
+interchangeable~\cite{lelidec2024contact}. This motivates a claim-level
+sensitivity study rather than treating a force tail recorded under one
+configuration as numerically invariant.
+
+\subsection{Direct Model-Based Reinforcement Learning}
+
+Temporal-difference model-predictive control (TD-MPC) and TD-MPC2 combine
+learned latent dynamics, value prediction, and
+model-predictive control for continuous
+tasks~\cite{hansen2022tdmpc,hansen2024tdmpc2}. TD-MPC2 uses a learned actor to
+guide online trajectory optimization through its latent world model. Our
+controller retains actor-guided MPPI but removes the earlier force-threshold
+router: the actor provides proposals in every regime, while continuous causal
+memberships adapt the planning objective and search budget. A same-checkpoint
+fixed-planner ablation therefore isolates regime adaptation from the
+capability already stored in the actor and world model.
+PPO~\cite{schulman2017ppo} provides a matched direct model-free comparator
+under a common interface and transition budget.
+
+Alternative designs deliberately retain more structure. Residual reinforcement
+learning learns corrections around a conventional controller
+\cite{johannink2019residual}; parameterized action primitives and Manipulation
+Primitive-augmented Reinforcement Learning (MAPLE) shorten
+the decision horizon through learned selection of closed-loop skills
+\cite{dalal2021raps,nasiriany2022maple}; and impedance primitive-augmented
+hierarchical reinforcement learning (IMP-HRL) combines primitive
+selection with variable-stiffness execution~\cite{tahmaz2025imphrl}. Against
+these structured alternatives, we characterize the empirical operating
+envelope of direct actor/world-model control under controlled variation and
+weak-curvature transfer.

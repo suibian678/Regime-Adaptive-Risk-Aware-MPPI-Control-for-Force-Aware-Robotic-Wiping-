@@ -1,0 +1,87 @@
+\section{Discussion and Limitations}
+\label{sec:discussion}
+
+The factor-separated evaluation supports the proposed mechanism rather than a
+simple increase in planning effort. Adaptive computation uses fewer samples,
+adaptive objectives reduce force error, and their combination raises compound
+pass by 11.11 percentage points with an interval that excludes zero. The
+improvement is concentrated in tracking and is especially visible at 12~N,
+where strict tracking rises from 5/45 to 17/45. It does not increase task
+completion or reduce sampled-limit violations. High-force regulation on the
+cylinder therefore remains the central performance limit.
+
+The mechanism ablations also delimit the contribution. Moving the historical
+routing threshold changes how often MPPI is used but does not expose a natural
+switching point. Conversely, adding a transient-envelope head or its
+target-specific calibration does not improve the frozen development outcomes.
+The supported method is consequently the smaller combination of persistent
+force conditioning, learned next-force risk, continuous regime-conditioned
+costs, and adaptive compute allocation.
+
+The BC ablation clarifies what \emph{direct} control requires in this study.
+The evaluation controller contains no teacher or separate force regulator,
+but the actor proposal is learned with behavioural supervision. Removing that
+supervision leaves one-step force-model accuracy unchanged and nevertheless
+eliminates contact in every development run. The result attributes BC's main
+role to proposal quality for contact acquisition and recovery, not to better
+force prediction. The moderate coefficient further shows that low offline
+action error is insufficient: its seed-dependent failures appear only in the
+closed loop.
+
+Planning latency remains a deployment constraint. Dynamic compute reduces the
+mean sample count and host planning time in the development screen, but the
+simulation still runs at a 100-Hz control discretization rather than a
+demonstrated 100-Hz wall-clock planner. The method should therefore be read as
+a control and allocation mechanism, not as evidence of real-time execution on
+the present host.
+
+The deployment-gap panel separates several practical sensitivities.  A
+0.10-mm TCP-position error and 0.035-N RMS force noise leave aggregate
+compound pass close to nominal, whereas a positive force bias sharply worsens
+tracking in B0 and S1.  Fifty milliseconds of observation delay reduces both
+completion and sampled-limit safety, and a 5-degree registered-normal error
+primarily disrupts task completion.  The opposite-signed force bias sometimes
+improves the thresholded tracking count while increasing force-tail exposure,
+so calibration error cannot be summarized by a single success rate.  These
+isolated interventions locate deployment sensitivities without representing
+a joint hardware-error distribution.
+
+The cross-engine results separate portability from task equivalence. The
+revised MuJoCo port meets the held-out multilevel normal-cycle criteria and
+matches the bidirectional motion's force history, onset, and peak, but its
+0.833-mm tangential-position RMSE exceeds the 0.5-mm tolerance. Zero-shot
+deployment is consequently interpreted as a stress test. All 30 flat and
+inclined evaluations pass, whereas all 15 cylindrical evaluations fail with
+sampled-limit exceedances. The surface-specific split strengthens the
+evidence for the simpler geometries, but it does not establish engine-invariant
+performance. Curved contact remains sensitive to the policy, geometry
+representation, and solver dynamics together.
+
+The repeated cylinder boundary also identifies a distinct method problem.
+Prior curved-surface wiping and polishing systems couple local-normal
+estimation, tool-posture adaptation, and force feedback
+\cite{armesto2018constraintaware,li2023unknownsurface}.
+Our policy receives a registered local frame but commands translation only;
+neither its latent force predictor nor its adaptive MPPI objective can rotate
+the tool to follow a changing normal. A curvature-specific extension should
+therefore add a bounded posture channel and compare registered, force-derived,
+and learned local-normal representations under a radius sweep. Retuning the
+present scalar force costs would not isolate this missing capability. We leave
+that extension outside the frozen study rather than adapting the method to the
+observed cylinder blocks.
+
+The numerical audit applies unchanged. Task completion, force tracking,
+contact continuity, and sampled force tails have different evidence
+requirements. The final method comparison consequently reports them
+separately as well as jointly. Peak force is an empirical statistic under the
+recorded solver configuration. The adaptive planner's mean peak increases by
+0.247~N and both planners record two samples above 15~N, so the measured
+tracking benefit is not interpreted as a safety improvement. MRE and NRMSE
+describe regulation on the observed contact samples.
+
+All experiments use rigid-contact simulation and a registered nominal task
+frame. The observations are causal but do not reproduce a physical camera,
+force-sensor bandwidth, calibration drift, deformable contamination, or robot
+communication stack. The factor-separated design improves causal
+interpretation within simulation. The cross-engine stress test broadens that
+evidence without replacing hardware validation.

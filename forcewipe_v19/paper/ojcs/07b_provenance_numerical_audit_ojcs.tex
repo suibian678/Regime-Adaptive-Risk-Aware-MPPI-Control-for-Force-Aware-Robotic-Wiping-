@@ -1,0 +1,32 @@
+\section{Provenance and Numerical Audit}
+\label{sec:credibility_audit}
+
+An independent audit re-read the 288 matched out-of-distribution traces,
+verified their hashes, and recomputed all 7,776 per-evaluation metric values
+without importing the experimental runner or finalizer. Every value and trace
+identity matched. This verifies the reported metrics, while using the same
+recorded trajectories.
+
+The controller is time-causal but not sensor-complete. Normal force, tool pose,
+and velocity come from simulator state; a registered nominal surface model
+supplies the local normal and tangent used by both observation and Cartesian
+action mapping. A separate binding audit verified the designated lateral and
+normal impulses, but did not establish that four declared reference- or
+sensor-noise labels reached the learner-visible force path. Those labels are
+therefore excluded from noise-robustness claims.
+
+The prespecified 12~N numerical panel reproduced four OOD sentinels and tested
+32 paired interventions in solver iterations, contact offset, source mesh, and
+their interaction. The material peak/threshold rule triggered in 11/32 cells;
+task, tracking, and sampled-limit status changed in three, two, and two cells,
+respectively. Ten peak responses were reductions, whereas one increase crossed
+15~N. Force-tail observations consequently describe the recorded numerical
+configuration rather than a general safety guarantee.
+
+All requested source arc counts reached the mesh factory, but PhysX convex
+cooking returned baseline-equivalent collision payloads in 11/12 pure mesh
+cells. Only one 96-segment request changed cooked topology and triggered a
+material response. The arm therefore audits request-to-collision mapping, not
+multilevel mesh convergence. Detailed provenance, claim boundaries, and all
+paired numerical cells are reported in the Supplementary Material.
+

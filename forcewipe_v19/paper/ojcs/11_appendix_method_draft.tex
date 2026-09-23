@@ -1,0 +1,102 @@
+\useRomanappendicesfalse
+\appendices
+\section{Artifact Package}
+\label{app:artifact_package}
+
+The public reproducibility package contains task and factor-block definitions,
+training and evaluation scripts, compact frozen results, bootstrap analyses,
+cross-simulator calibration records, numerical-sensitivity cells, and
+verification tests. Five checkpoints and the step-level evaluation traces are
+stored in a separate versioned archival record. Repository and archive
+manifests record the relative path, byte count, and SHA-256 digest of every
+payload file. Reproduction starts from the environment record and checkpoint
+manifest, then runs the frozen evaluators and independent analyses against the
+recorded trace keys.
+
+\section{Direct PPO Configuration}
+\label{app:ppo_configuration}
+
+The direct PPO reference uses a 16-dimensional observation, a
+three-dimensional Cartesian action, two hidden layers of width 256, a
+learning rate of $3\times10^{-4}$, discount 0.99, generalized-advantage
+parameter 0.95, clip ratio 0.2, entropy coefficient 0.005, and value
+coefficient 0.5. Each update uses 2,048 rollout transitions, ten epochs, and
+eight minibatches per epoch, with gradient norm clipped at 0.5.
+
+The budget study checkpoints the default setting at 82,774, 165,548, and
+331,096 transitions. Six one-factor variants use 165,548 transitions and
+change learning rate to $10^{-4}$ or $10^{-3}$, clip ratio to 0.1 or 0.3, or
+entropy coefficient to 0 or 0.01. Table~\ref{tab:ppo_dev_sensitivity} reports
+all development endpoints. Every endpoint contains 90 evaluations; authority
+passes are 90/90 throughout. The fixed selection rule chose clip ratio 0.1 at
+2$\times$ budget. No final-suite result was used for selection.
+
+\begin{table}[t]
+\centering
+\caption{Direct PPO development sensitivity over 90 evaluations per endpoint.}
+\label{tab:ppo_dev_sensitivity}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Endpoint & Compound & Task & Tracking & Safety \\
+\midrule
+Default, 1$\times$ & 0 & 8 & 4 & 89 \\
+Default, 2$\times$ & 0 & 9 & 0 & 79 \\
+Default, 4$\times$ & 1 & 4 & 8 & 87 \\
+LR $10^{-4}$, 2$\times$ & 1 & 16 & 6 & 87 \\
+LR $10^{-3}$, 2$\times$ & 1 & 4 & 7 & 70 \\
+Clip 0.1, 2$\times$ & 3 & 11 & 6 & 79 \\
+Clip 0.3, 2$\times$ & 0 & 13 & 5 & 88 \\
+Entropy 0, 2$\times$ & 0 & 8 & 0 & 90 \\
+Entropy 0.01, 2$\times$ & 0 & 5 & 7 & 89 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Cell-Level Numerical-Sensitivity Results}
+\label{app:numerical_cells}
+
+Tables~\ref{tab:numerical_cells_f1_f2} and
+\ref{tab:numerical_cells_f4_f5} report every factor--sentinel cell used in the
+numerical-sensitivity analysis. The three-bit suffix records task, tracking,
+and sampled-force-limit pass status in that order.
+
+The mesh factory received all 12 requested source resolutions. Ten cooked
+payloads matched the 48-segment baseline digest; the eight-segment F4 request
+retained the same 24-triangle connectivity, while its 14 vertex coordinates
+differed by at most $1.39\times10^{-17}$~m. Only the 96-segment F4 request
+changed the topology and triggered the source-resolution peak rule.
+
+\FloatBarrier
+\input{tables/numerical_audit_cells}
+\FloatBarrier
+
+\section{Cross-Simulator Calibration Gate}
+\label{app:crosssim_gate}
+
+The MuJoCo port was calibrated without loading a policy checkpoint. Three
+contact-free motions identified a two-sample delay and 80-ms first-order
+actuator response. Four exposed contact motions then selected the contact and
+drive parameters. Table~\ref{tab:crosssim_validation} gives the errors on two
+new held-out motions. The multilevel normal cycle meets every tolerance. The
+bidirectional tangential motion meets the force, onset, and peak tolerances,
+but its 0.833-mm position RMSE exceeds the 0.5-mm limit. The later policy run
+is therefore a zero-shot stress test rather than matched-engine replication.
+
+\begin{table}[t]
+\centering
+\caption{Held-out cross-simulator task-equivalence calibration.}
+\label{tab:crosssim_validation}
+\scriptsize
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Motion & F-NRMSE & Pos. RMSE & Onset & Peak error \\
+ & (\%) & (mm) & (samples) & (\%) \\
+\midrule
+Multilevel normal cycle & 7.16 & 0.337 & 4 & 4.76 \\
+Bidirectional tangent & 9.37 & 0.833 & 4 & 1.99 \\
+\midrule
+Tolerance & 20.0 & 0.500 & 5 & 20.0 \\
+\bottomrule
+\end{tabular}
+\end{table}

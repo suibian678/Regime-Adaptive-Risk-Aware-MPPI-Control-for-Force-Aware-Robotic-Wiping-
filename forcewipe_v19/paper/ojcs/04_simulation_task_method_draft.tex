@@ -1,0 +1,211 @@
+% Requires: \usepackage{amsmath,amssymb,booktabs,tabularx}
+\providecommand{\Ftgt}{F^{\star}}
+\providecommand{\Fmin}{F_{\min}}
+\providecommand{\Fmax}{F_{\max}}
+\providecommand{\Faud}{F^{\mathrm{aud}}}
+\providecommand{\ind}{\mathbb{I}}
+
+\section{Simulation Task and Evaluation Suite}
+\label{sec:benchmark}
+
+We use ForceWipe as a controlled simulation testbed for direct first-pass
+wiping. A successful evaluation must traverse the path, maintain useful
+contact, track the target normal force, and avoid recorded force-limit
+exceedances. The test cases vary path geometry, surface orientation, tool
+profile, contact parameters, disturbances, and weak surface curvature. The
+resulting suites define controlled and transfer conditions for the same direct
+action interface.
+
+\subsection{Direct First-Pass Task}
+\label{subsec:task}
+
+A seven-degree-of-freedom Franka Emika Panda manipulates a wiping tool in
+ManiSkill3 with the PhysX central processing unit (CPU)
+backend~\cite{xiang2020sapien,c_maniskill}.
+Physics and control advance together at $100$~Hz. At each step, the local task
+frame is formed by the path tangent $\mathbf{t}_t$, outward surface normal
+$\mathbf{n}_t$, and cross-track axis
+$\mathbf{c}_t=\mathbf{n}_t\times\mathbf{t}_t$. The controller outputs
+\begin{equation}
+\mathbf{a}_t=
+\begin{bmatrix}a_t^{\parallel}&a_t^{\perp}&a_t^{n}\end{bmatrix}^{\!\top}
+\in[-1,1]^3,
+\label{eq:direct_action}
+\end{equation}
+where the components request along-path, cross-track, and inward-normal
+displacements. The fixed, force-independent actuator map is
+\begin{equation}
+\Delta\mathbf{x}_t=
+(0.50\,\mathrm{mm})a_t^{\parallel}\mathbf{t}_t
++(0.25\,\mathrm{mm})a_t^{\perp}\mathbf{c}_t
+-(0.50\,\mathrm{mm})a_t^{n}\mathbf{n}_t.
+\label{eq:task_frame_map}
+\end{equation}
+Post-policy processing consists exclusively of action-box clipping and a
+force-independent coordinate transform in \eqref{eq:task_frame_map}.
+
+The tangent and normal are evaluated from the registered nominal path and
+surface model at the simulator-state tool pose. They are not inferred from a
+camera, force sensor, or the TD-MPC2 latent state. Consequently, ``direct'' in
+this study denotes the absence of a separate force-control or shielding layer;
+it does not denote model-free geometric perception. This registered-frame
+assumption is shared by all compared methods.
+
+At decision step $t$, $F_t$ denotes the force supplied to the causal
+observation before $\mathbf{a}_t$ is selected. We reserve $\Faud_t$ for the
+native force read back after the corresponding physics step and attached to
+that transition for evaluation. The target normal force is
+$\Ftgt\in\{5,8,12\}$~N. The online contact indicator uses
+$F_t\geq\Fmin=3$~N, whereas evaluation metrics use the post-step contact set
+$\Faud_t\geq\Fmin$ defined in Sec.~\ref{subsec:metrics}. A strict sampled violation is
+$\Faud_t>\Fmax=15$~N. The statement ``zero
+violations'' therefore means that no recorded $100$-Hz sample exceeded
+$15$~N. All force-limit results use this native sampled definition.
+The three force targets, the 3-N contact threshold, and the 15-N sampled
+limit form the frozen operating contract of this simulation task. They are
+used identically by every method and were fixed before the controlled and
+factor-separated evaluations; they are not presented as general robot or
+human-contact safety standards.
+
+Each path is divided into 20 normalized progress bins. A bin is marked
+complete once it has accumulated at least two samples satisfying
+$\Fmin\leq\Faud_t\leq\Fmax$, corresponding to $20$~ms at the simulator
+rate. A task pass requires a single first-pass lifecycle to terminate with
+all 20 bins complete and progress $s\geq0.98$. Re-wiping is disabled in all
+three evaluation suites. The dose endpoint is synthetic contact
+coverage and serves as the completion proxy.
+
+\subsection{Controlled Evaluation Blocks}
+\label{subsec:controlled_suite}
+
+The initial and held-out controlled suites use three
+surface orientations (flat, $5^{\circ}$ incline,
+and $10^{\circ}$ incline), five path families (line, diagonal, arc,
+S-curve, and polyline), and three tool profiles (wide-soft, narrow-soft, and
+wide-hard). Their synthetic residual fields comprise single-blob, islands,
+edge-dense, stripe or multimodal, and Gaussian-random-field patterns. These
+factors are assembled into prespecified blocks rather than sampled as an
+independent factorial design.
+
+The five initial blocks Q0--Q4 use the nominal contact plant and
+no exogenous disturbance. They vary path length between approximately
+$0.156$ and $0.166$~m while changing geometry, tool, and residual field by
+block. The ten previously unused held-out blocks C0--C9 form two disjoint
+groups. C0--C4 repeat the five path families on a nominal plant. C5--C9
+pair the same roster positions with randomised path length, friction,
+support stiffness, effective mass, damping, and restitution. Their frozen
+definitions also label designated blocks with lateral or normal impulses,
+reference noise, and delayed sensor noise. A later binding audit established
+the physical impulse call chain but did not establish that the declared
+reference-noise and sensor-noise signals reached the direct controller's
+learner-visible force path. We therefore make no robustness claim for those
+two declared noise conditions. Because several verified attributes change
+jointly, grouped path, surface, tool, residual, and plant summaries quantify
+block-level transfer rather than single-factor effects.
+
+\subsection{Weak-Curvature Out-of-Distribution Blocks}
+\label{subsec:weak_curvature_suite}
+
+The matched OOD study contains six previously unused, prespecified blocks
+F0--F5. All surfaces are static cylinders with radii $1.2$--$1.8$~m. Its paths
+are arc, S-curve, or polyline trajectories with lengths $0.13$--$0.205$~m.
+Across the six blocks, the study includes all three tool profiles, six
+residual families, randomised friction and contact plant parameters, and
+predefined disturbance labels. Physical lateral and normal impulse call chains
+are present in their designated blocks; the declared reference-noise and
+sensor-noise/latency effects are excluded from the evidence claims because
+their runtime binding was not established. Table~\ref{tab:evaluation_suites}
+summarizes the evaluation stages.
+
+\begin{table*}[t]
+\centering
+\caption{Prespecified simulation suites. Evaluation totals are Cartesian
+products of blocks, force targets, and method replicates; blocks are the
+environment units. For the deployment-gap panel, 375+45 denotes new stress
+evaluations plus reused nominal evaluations.}
+\label{tab:evaluation_suites}
+\small
+\setlength{\tabcolsep}{4.5pt}
+\begin{tabular}{@{}lccccp{6.1cm}@{}}
+\toprule
+Stage & Blocks & Targets & Replicates & Evaluations & Main variation \\
+\midrule
+Controlled evaluation
+& 5 & 3 & 5 checkpoints & 75
+& Five paths; flat/$5^{\circ}$/$10^{\circ}$ surfaces; three tools; nominal plant \\
+Held-out controlled evaluation
+& 10 & 3 & 5 checkpoints & 150
+& Five nominal multipath blocks plus five randomised-plant/disturbance blocks \\
+Matched weak-curvature OOD
+& 6 & 3 & method dependent & 288
+& Static weak-curvature cylinders, three paths, three tools, randomised plant, and disturbances \\
+Numerical sentinel panel
+& 4 & 1 & one checkpoint & 36
+& Four 12~N OOD baseline reproductions plus 32 solver, contact-offset, mesh, and interaction cells \\
+Deployment-gap stress
+& 3 & 3 & 5 checkpoints & 375+45
+& Learner-visible force noise/bias, delay, TCP-position error, and registered-frame normal error \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+The controlled and weak-curvature suites are reported separately to preserve
+their deliberately different scenario distributions.
+
+\subsection{Evaluation Metrics and Success Criteria}
+\label{subsec:metrics}
+
+Force tracking is computed over the finite contact set
+\begin{equation}
+\mathcal{T}_{c}=\{t\mid \Faud_t\geq3~\mathrm{N}\}.
+\end{equation}
+If $\mathcal{T}_{c}$ is empty, the force-tracking metrics are undefined and
+the evaluation fails the tracking criterion. For a nonempty contact set, we
+report mean relative error (MRE), root-mean-square error (RMSE), and normalized
+root-mean-square error (NRMSE):
+\begin{align}
+\overline F_c
+&=\frac{1}{|\mathcal{T}_{c}|}
+\sum_{t\in\mathcal{T}_{c}}\Faud_t,\nonumber\\
+b_F&=\overline F_c-\Ftgt,\qquad
+\mathrm{MRE}=\frac{|b_F|}{\Ftgt},\nonumber\\
+\mathrm{RMSE}
+&=\sqrt{\frac{1}{|\mathcal{T}_{c}|}
+\sum_{t\in\mathcal{T}_{c}}(\Faud_t-\Ftgt)^2},\nonumber\\
+\mathrm{NRMSE}&=\frac{\mathrm{RMSE}}{\Ftgt}.
+\label{eq:force_metrics}
+\end{align}
+Tracking is considered successful when
+$\mathrm{MRE}\leq0.15$ and $\mathrm{NRMSE}\leq0.20$. Signed bias is
+retained so systematic under-tracking remains visible even when both
+tolerances are met. These two tolerances are likewise study-defined acceptance
+criteria frozen with the evaluation protocol, rather than thresholds inferred
+from the reported trials.
+
+The force evaluation records episode peak force, peak overshoot
+$\max(\max_t\Faud_t-\Ftgt,0)$, peak-force mean, 95th percentile (P95), and
+maximum, and sample counts
+above $14.5$ and $15$~N. The $14.5$~N count is descriptive headroom; the
+sampled-force-limit criterion requires zero samples above $15$~N. Contact metrics
+include contact fraction and, after first contact, the number, total duration,
+and maximum duration of maximal consecutive intervals below $3$~N.
+Force-tail quantities describe the frozen numerical configuration in which
+they were observed. Section~\ref{sec:credibility_audit} separately tests their
+sensitivity to selected simulator settings.
+
+An evaluation satisfies deployment integrity when every trace confirms
+direct-action interface compliance: the selected learned branch issued the
+executed action, followed by the fixed map in \eqref{eq:task_frame_map}. A
+\emph{compound pass} is the intersection of task completion, tracking,
+sampled-force-limit compliance, and deployment integrity. Nonfinite force or
+an empty contact set counts as an evaluation failure. Planning time and the
+actor/MPPI action fractions are descriptive computational metrics.
+
+\subsection{Scope of the Suite}
+\label{subsec:scope}
+
+The blocks are fixed conditions, with each block defining an
+environment unit. Replicated checkpoint--block--target trials increase the
+precision of within-design comparisons. The suite characterizes direct
+force-aware wiping under controlled variation and weak-curvature transfer;
+Sec.~\ref{sec:discussion} defines the corresponding deployment scope.

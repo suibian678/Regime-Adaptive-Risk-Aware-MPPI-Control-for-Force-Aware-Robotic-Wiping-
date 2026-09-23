@@ -1,0 +1,58 @@
+{
+  "audit": {
+    "actor_teacher_action_rmse": 0.08725999295711517,
+    "condition_dimension": 16,
+    "condition_persistence_max_abs_error": 0.0,
+    "latent_consistency_mse": 0.002308519324287772,
+    "one_step_force_rmse_n": 0.3720708191394806,
+    "pairwise_condition_l2": [
+      1.0072977542877197,
+      1.1746851205825806,
+      1.074550986289978
+    ],
+    "planner_action_abs_max": 1.0,
+    "planner_action_mean": [
+      0.2794948529917747,
+      -0.012253823457285762,
+      -0.2995064811160167
+    ],
+    "planner_actions_finite": true,
+    "planner_probe_states": 12,
+    "target_gate_accuracy": 1.0,
+    "target_gate_confusion": [
+      [
+        2627,
+        0,
+        0
+      ],
+      [
+        0,
+        2774,
+        0
+      ],
+      [
+        0,
+        0,
+        2092
+      ]
+    ],
+    "validation_transitions": 7493
+  },
+  "checkpoint": "v19_force_conditioned_tdmpc2.pt",
+  "checkpoint_sha256": "d7fa902f9bdaa558d91b8af0369e31f177e7a15fd484b2de650ac701a78cf568",
+  "claim_boundary": "TRAIN and TRAIN-validation only; no environment evaluation, method superiority, or hardware claim.",
+  "completed_utc": "2026-09-19T14:43:20.774818Z",
+  "format": "forcewipe_v19_force_conditioned_training_result_v1",
+  "gate_results": {
+    "actor_teacher_action_rmse": true,
+    "force_condition_persistence": true,
+    "force_targets_have_distinct_conditions": true,
+    "latent_consistency": true,
+    "one_step_force_rmse_n": true,
+    "planner_action_box": true,
+    "planner_finite": true,
+    "target_gate_accuracy": true
+  },
+  "offline_training_gate_passed": true,
+  "run_id": "v19_force_conditioned_seed205_bc2_u4000"
+}

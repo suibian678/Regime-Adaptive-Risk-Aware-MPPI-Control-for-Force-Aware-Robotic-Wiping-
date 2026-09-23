@@ -1,0 +1,90 @@
+{
+  "checks": [
+    {
+      "check": "result_status",
+      "detail": "completed",
+      "passed": true
+    },
+    {
+      "check": "state_status",
+      "detail": "completed",
+      "passed": true
+    },
+    {
+      "check": "protocol_identity",
+      "detail": "82b56ee2a991aaff6f832dc1219690777d776c06d986bf6872e167af3e4340cd",
+      "passed": true
+    },
+    {
+      "check": "evaluation_key_set",
+      "detail": 45,
+      "passed": true
+    },
+    {
+      "check": "trace_hashes_and_counts",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "trace_metric_recomputation",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "planner_seed_sequence",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "manifest_files",
+      "detail": {
+        "entries": 48,
+        "failures": []
+      },
+      "passed": true
+    },
+    {
+      "check": "mujoco_aggregate",
+      "detail": {
+        "evaluations": 45,
+        "force_limit_violation_samples": 15,
+        "joint_passes": 30,
+        "maximum_peak_force_n": 20.24368426070928,
+        "sampled_force_safety_passes": 30,
+        "task_successes": 30,
+        "tracking_passes": 30
+      },
+      "passed": true
+    },
+    {
+      "check": "physx_pair_key_set",
+      "detail": 45,
+      "passed": true
+    },
+    {
+      "check": "pair_count",
+      "detail": 45,
+      "passed": true
+    },
+    {
+      "check": "no_staging",
+      "detail": true,
+      "passed": true
+    }
+  ],
+  "checks_passed": 12,
+  "checks_total": 12,
+  "format": "forcewipe_v19_mujoco_zero_shot_transfer_independent_audit_v1",
+  "manifest_sha256": "e50b7719547f646f44fe71d25d76df0351d111c9fc6acc331b381744a6036ce7",
+  "mujoco_summary": {
+    "evaluations": 45,
+    "force_limit_violation_samples": 15,
+    "joint_passes": 30,
+    "maximum_peak_force_n": 20.24368426070928,
+    "sampled_force_safety_passes": 30,
+    "task_successes": 30,
+    "tracking_passes": 30
+  },
+  "result_sha256": "fef322d2e3c4aa25a556751ff5954a9b5a5e7eb2304b8ebd9163a648df99da3e",
+  "status": "PASS"
+}

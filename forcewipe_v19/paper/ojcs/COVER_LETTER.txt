@@ -1,0 +1,29 @@
+Dear Editor,
+
+Please consider the manuscript “Regime-Adaptive Risk-Aware MPPI Control for
+Force-Aware Robotic Wiping with Temporal-Difference World Models” for
+publication in the IEEE Open Journal of the Computer Society.
+
+The article presents a computation-aware extension of TD-MPC2 for contact-rich
+robotic wiping. A force-conditioned world model drives a regime-adaptive,
+risk-aware MPPI planner that changes both its planning objective and sampling
+budget from causal contact evidence. Across 270 paired evaluations, the method
+raises compound pass from 85/135 to 100/135 while using eight fewer planning
+samples and 25.7 ms less median planning time. A separate zero-shot MuJoCo
+study retains all 30 flat and inclined compound outcomes and identifies curved
+contact as the remaining portability boundary.
+
+The manuscript focuses on world-model control, adaptive computation, rigorous
+simulation evaluation, and reproducible software artifacts. It is original,
+has not been published previously, and is not under review elsewhere. The
+author declares no competing interests and will provide public code and an
+archival data record.
+
+Thank you for your consideration.
+
+Sincerely,
+
+Zhiheng Li
+Independent Researcher, Shanghai, China
+LLzhiheng@outlook.com
+

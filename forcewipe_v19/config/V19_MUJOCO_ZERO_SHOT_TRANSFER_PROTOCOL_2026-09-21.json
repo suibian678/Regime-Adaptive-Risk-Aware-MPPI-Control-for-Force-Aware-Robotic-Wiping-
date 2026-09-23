@@ -1,0 +1,81 @@
+{
+  "format": "forcewipe_v19_mujoco_zero_shot_transfer_protocol_v1",
+  "status": "FROZEN_READY_TO_EXECUTE",
+  "study_role": "cross_engine_simulation_robustness_stress_test",
+  "claim_boundary": "This is a zero-shot cross-engine simulation stress test. It is not hardware validation, Sim2Real evidence, or a matched solver replication.",
+  "calibration_interpretation": {
+    "result": "completed_validation_fail",
+    "result_path": "results/calibration/mujoco_crosssim_calibration_r3_v1/RESULT.json",
+    "result_sha256": "b1babdc29d3a26c47fa18f3f24d238a0a8a3e9e497a1ab11bce59509dd829ae3",
+    "passed_channels": [
+      "contact_free actuator motions",
+      "exposed normal/contact development motions",
+      "held-out multilevel normal cycle"
+    ],
+    "unmatched_channel": "held-out bidirectional tangential contact reversal (0.833 mm position RMSE versus the frozen 0.5 mm tolerance)",
+    "consequence": "Results quantify transfer to the defined MuJoCo port under a documented engine gap; they cannot establish PhysX--MuJoCo equivalence."
+  },
+  "execution": {
+    "run_id": "v19_mujoco_zero_shot_transfer_20260921_r1",
+    "engine": "MuJoCo 3.1.2",
+    "training_seeds": [201, 202, 203, 204, 205],
+    "method_arm": "M4_full_adaptive",
+    "bc_coefficient": 2.0,
+    "risk_envelope_mode": "force_only",
+    "blocks": ["B0", "S1", "S2"],
+    "targets_n": [5.0, 8.0, 12.0],
+    "evaluations": 45,
+    "policy_retraining": false,
+    "policy_or_port_tuning_after_execution_starts": false,
+    "complete_all_evaluations_after_scientific_failure": true,
+    "planner_seed_rule": "9190000000 + training_seed*10000000 + scenario_id*2000 + control_step"
+  },
+  "port_configuration": {
+    "physics_timestep_s": 0.001,
+    "control_timestep_s": 0.01,
+    "contact_time_constant_s": 0.03,
+    "contact_damping_ratio": 0.5,
+    "contact_margin_m": 0.0035,
+    "contact_impedance_min": 0.9,
+    "contact_impedance_max": 0.95,
+    "contact_impedance_width_m": 0.001,
+    "tool_drive_scale": 0.8,
+    "tool_tangential_drive_scale": null,
+    "support_drive_scale": 1.0,
+    "friction_scale": 1.0,
+    "solver_iterations": 50,
+    "actuation_gain": 1.0,
+    "actuation_time_constant_s": 0.08,
+    "actuation_delay_steps": 2
+  },
+  "endpoints": {
+    "task_success": "first-pass completion of all 20 dose bins without re-wiping",
+    "tracking_pass": "contact MRE <= 0.15 and target-normalised RMSE <= 0.20",
+    "sampled_force_safety": "zero native control samples with F > 15 N",
+    "joint_pass": "task_success and tracking_pass and sampled_force_safety",
+    "analysis": "Report every endpoint by block, target and training seed, then pair the 45 MuJoCo evaluations with the already frozen PhysX evaluations on identical seed/block/target keys. No single overall pass threshold is imposed on this stress test."
+  },
+  "matched_physx_source": {
+    "path": "results/final/v19_factor_separated_m1_m4_evaluation_20260920_r1/RESULT.json",
+    "sha256": "c5e38f134ab70c537cf8156e11c91ffc499bee18a5027c22bbe68b971cf8829d",
+    "arm": "M4_full_adaptive"
+  },
+  "frozen_sources": {
+    "code/forcewipe_v19/mujoco_crosssim_env.py": "75ef7199f8bff6a3c60f83b1960943096d50b3d7e2809f611d7f6f29cf06e91e",
+    "code/forcewipe_v19/factor_separated_scenarios.py": "03311a02ea15e0a4e5b00a2c5cfcbab96851f82e967e946d1e8ef4da71fc8f5d",
+    "scripts/run_v19_seed201_method_dev12.py": "f2863112cf455bac6613d4fcb7e3bdd7ac5ea086e0a7e7cba84e51aa8b69d375"
+  },
+  "checkpoint_sha256": {
+    "201": "9f6c2143babacfa0e0afc28cbb95ceff216758e5337a3c2d1e5768aa0017c316",
+    "202": "56779b11cfcd970e26abda8f57efcacd8c62f4e8fd1cc8f478e863402d10de1b",
+    "203": "54afa327230e32a028ac583667db4189a23db79fc791d6e5848d6ed6327c0c0c",
+    "204": "8e8aa9ee5711639a1485a6d48400f430a4f73375cf7c3d2db9108fef5897709b",
+    "205": "d7fa902f9bdaa558d91b8af0369e31f177e7a15fd484b2de650ac701a78cf568"
+  },
+  "runtime_versions": {
+    "mujoco": "3.1.2",
+    "torch": "2.11.0+cu128",
+    "numpy": "1.24.4",
+    "gymnasium": "0.29.1"
+  }
+}

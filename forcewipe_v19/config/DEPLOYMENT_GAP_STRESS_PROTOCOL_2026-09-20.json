@@ -1,0 +1,56 @@
+{
+  "format": "forcewipe_v19_deployment_gap_stress_protocol_v1",
+  "status": "CODE_ONLY_BINDING_PASS_READY_TO_EVALUATE",
+  "research_question": "How does the frozen direct TD-MPC2 method degrade under individually controlled learner-visible sensing, latency, and registered-frame errors?",
+  "method": "M4_full_adaptive",
+  "checkpoint_seeds": [201, 202, 203, 204, 205],
+  "target_forces_n": [5, 8, 12],
+  "design": {
+    "complete_curve_block": "B0",
+    "endpoint_confirmation_blocks": ["S1", "S2"],
+    "existing_nominal_evaluations_reused": 45,
+    "new_evaluations": 375,
+    "reported_evaluations": 420,
+    "one_factor_at_a_time": true,
+    "common_planner_random_numbers": true
+  },
+  "stress_factors": {
+    "force_white_noise_rms_n": [0.035],
+    "episode_force_bias_n": [-0.8, -0.4, 0.4, 0.8],
+    "observation_delay_samples": [1, 2, 5],
+    "tcp_pose_error_magnitude_m": [0.00005, 0.0001],
+    "surface_normal_error_magnitude_deg": [1, 3, 5]
+  },
+  "endpoint_confirmation": {
+    "force_white_noise_rms_n": [0.035],
+    "episode_force_bias_n": [-0.8, 0.8],
+    "observation_delay_samples": [5],
+    "tcp_pose_error_magnitude_m": [0.0001],
+    "surface_normal_error_magnitude_deg": [5]
+  },
+  "numeric_basis": {
+    "force_white_noise_rms_n": "Franka handbook force-noise specification.",
+    "episode_force_bias_n": "0.8 N is the handbook relative-force-accuracy scale; 0.4 N is its midpoint.",
+    "observation_delay_samples": "Study-defined 10, 20, and 50 ms stresses at the frozen 100-Hz control rate.",
+    "tcp_pose_error_magnitude_m": "Half and full scale of the handbook's <+/-0.1 mm pose-repeatability figure; used only as a stress scale.",
+    "surface_normal_error_magnitude_deg": "Study-defined registered-frame calibration errors, not a measured camera distribution."
+  },
+  "injection_contract": {
+    "force_noise_and_bias": "learner-visible force, force rate, and contact indicator only; outcome metrics retain native force",
+    "observation_delay": "entire 16-D learner observation; outcome metrics remain current",
+    "tcp_pose_error": "fixed episode-level cross/normal observation offset with deterministic direction",
+    "surface_normal_error": "same biased registered frame used by geometric observation channels and task-frame action mapping",
+    "trace_fields": "native value, perturbed current value, delayed learner-visible value, policy action, and issued actuator action"
+  },
+  "analysis": {
+    "primary_use": "descriptive paired degradation curves; no superiority gate",
+    "reported_metrics": [
+      "compound pass", "task completion", "MRE", "NRMSE", "contact fraction",
+      "peak force", "sampled force-limit violations", "episode length"
+    ],
+    "uncertainty": "paired point estimates and 95% intervals over the fixed checkpoint roster; conclusions restricted to the specified blocks and levels",
+    "failure_handling": "all finite scientific failures retained; no post-result level changes"
+  },
+  "claim_boundary": "Simulation stress evidence only; not a hardware success rate or a joint real-system error model.",
+  "external_source": "https://download.franka.de/Product-Manual-Franka-Emika-Robot_EN_10_2021.pdf"
+}

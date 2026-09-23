@@ -1,0 +1,146 @@
+\section{Experimental Design}
+\label{sec:experimental_design}
+
+The experiments address five questions. \textbf{RQ1} asks whether adapting
+the planning objective and search budget improves direct wiping relative to a
+fixed planner built from the same checkpoint. \textbf{RQ2} separates the
+contributions of objective adaptation, compute adaptation, and risk
+representation. \textbf{RQ3} examines how behaviour-cloning (BC)
+strength affects the actor proposal and closed-loop contact. \textbf{RQ4}
+tests whether the selected method transfers under isolated surface, path,
+friction, and support-stiffness shifts. \textbf{RQ5} asks how the frozen
+method responds to learner-visible sensing, latency, and registered-frame
+errors, and whether an independently implemented simulator is sufficiently
+task-equivalent for matched replication. It then asks which task capabilities
+persist when the frozen policy is deployed zero-shot despite a documented
+residual engine gap.
+
+\subsection{Training and Seed Policy}
+
+All learned arms use five predetermined seeds. Each seed receives 82,774
+training transitions and 4,000 optimization updates. The update schedule
+contains a target-conditioning gate, BC pretraining, and joint world-model,
+value, force-prediction, envelope-prediction, actor, and BC optimization. No
+seed is removed on the basis of training or evaluation performance. The
+envelope output remains available only for the development mechanism
+ablation; the selected controller uses the learned next-force prediction.
+The transition count is the complete frozen source dataset used by each
+TD-MPC2 seed; equal data and update budgets are maintained across its training
+ablations. Seeds are experimental replicates, and none is screened or replaced.
+
+The BC study retrains the same five-seed roster with coefficients 0, 0.5, and
+2. The architecture, source transitions, update count, target-force roster,
+and planner are unchanged. The selected coefficient is the smallest tested
+setting that maintains contact, completion, and sampled-limit compliance for
+all seeds on the development screen.
+The three-point grid represents absent, intermediate, and strong proposal
+anchoring; it is a bounded mechanism study, not a claim that 2 is a universal
+optimum.
+
+\subsection{Matched Planner Ablations}
+
+Four planner arms share each force-conditioned checkpoint. M1 uses fixed
+objective weights and a fixed MPPI budget. M2 adapts the objective only. M3
+adapts sample count, optimization iterations, and exploration scale only. M4
+combines both mechanisms. The development screen crosses the four arms with
+five seeds and three force targets under common scenario and per-step random
+streams.
+
+A second three-arm ablation changes the risk representation inside M4. The
+\emph{force-only} arm uses predicted next force, the \emph{point-envelope}
+arm additionally uses the predicted transient envelope, and the
+\emph{calibrated-envelope} arm adds the target-specific validation residual.
+This comparison tests whether the uncertainty allowance contributes beyond
+the point predictor. The mode is selected lexicographically by sampled force
+violations, task success, strict tracking passes, mean NRMSE, and mean MRE.
+
+The historical controller used a hard actor--MPPI switch at
+$F_t=0.85F^\star$. We evaluate activation fractions from 0.70 to 0.95 using
+the frozen historical checkpoints, shared scenarios, and shared step-level
+random streams. This study measures the sensitivity of the earlier router;
+RA-RMPPI itself contains no hard routing threshold.
+
+\subsection{Factor-Separated Evaluation}
+
+After method selection, M1 and M4 are evaluated on nine new fixed blocks. A
+reference block uses a flat surface, straight path, friction coefficient 0.5,
+and support stiffness 2500~N/m. Two surface blocks replace the surface with a
+10-degree incline or a 1.2-m-radius cylinder. Two path blocks use an arc or
+S-curve. Two friction blocks use coefficients 0.3 or 0.7, and two support
+blocks use 1600 or 3400~N/m. Every shifted block changes only its declared
+factor relative to the reference; tool, residual field, disturbance, path
+length, mass, damping ratio, and restitution remain fixed.
+The friction values bracket the reference by $\pm0.2$, and the stiffness
+values bracket it by $\pm900$~N/m. Together with the two fixed surface and path
+contrasts, they are prespecified stress levels for factor isolation, not
+samples from a material or deployment population.
+
+The full design contains $9\times3\times5\times2=270$ evaluations. M1 and M4
+share the scenario and per-control-step random stream within every
+seed--block--target cell. The primary outcome is a compound pass requiring
+task completion, tracking mean relative error (MRE) at most 15\%,
+target-normalized root mean square error (NRMSE) at most 20\%, zero native
+samples above 15~N, and deployment integrity.
+Continuous force bias, MRE, NRMSE, contact loss, sampled peak force, planning
+latency, and planning sample count are reported separately. Paired intervals
+resample both block and training seed. Factor panels are analysed separately
+so that a surface effect is not attributed to simultaneous changes in path,
+tool, or plant parameters.
+The compound pass is the sole primary outcome. Other intervals quantify effect
+size and within-design stability and are not treated as additional
+multiplicity-adjusted confirmatory tests. All 270 rows in the Cartesian product
+are retained, and inference is restricted to the nine fixed blocks and five
+checkpoint seeds represented by the resampling scheme.
+
+\subsection{Comparator Evidence}
+
+Direct PPO uses the same deployment observation and action interface. A
+bounded follow-up tests whether its original result is specific to the
+82,774-transition budget or a single default configuration. For each of five
+predetermined seeds, the default setting is checkpointed after 1$\times$,
+2$\times$, and 4$\times$ that budget. Six one-factor variants change the
+learning rate, clipping ratio, or entropy coefficient at 2$\times$ budget.
+All nine endpoints are evaluated on six development blocks. A prespecified
+lexicographic rule selects one endpoint, which is then evaluated without
+further tuning on the matched weak-curvature and factor-separated suites.
+PPO is trained online whereas TD-MPC2 uses a frozen source dataset, so the
+comparison matches simulator transitions rather than optimizer updates.
+Adaptive admittance is reported target by target as a deterministic
+structured-control reference.
+
+\subsection{Deployment-Gap and Cross-Simulator Probes}
+
+The deployment-gap study freezes the selected controller and varies one
+learner-visible factor at a time. The factors are force white noise at
+0.035~N root mean square, episode force biases from $-0.8$ to $0.8$~N,
+observation delays of 10, 20, and 50~ms, TCP-position errors of 0.05 and
+0.10~mm, and registered-frame normal errors of 1, 3, and 5 degrees. A
+reference block traces the complete level curves; two additional fixed blocks
+repeat the most severe level of each factor. Force perturbations affect the
+policy observation but not the native-force outcome metric, while the normal
+error is applied consistently to geometric observations and task-frame action
+mapping. The analysis reports paired degradation curves over five frozen
+checkpoints and three force targets. These levels are controlled simulation
+stresses rather than estimates of a joint hardware-error distribution. The
+force-noise, force-accuracy, and position-repeatability scales follow the
+manufacturer handbook~\cite{franka2021handbook}; the latency and frame-error
+levels are study-defined stresses.
+
+A separate policy-independent gate measures how closely a MuJoCo task port
+reproduces the frozen PhysX task. Fixed open-loop actuator and contact motions
+are divided into development and held-out sets. The fixed tolerances are force
+NRMSE at most 20\%, relative-position RMSE at most 0.5~mm, contact-onset error
+at most five 100-Hz samples, and peak-force error at most 20\%. The revised
+port meets the free-space actuator and held-out normal-cycle criteria but not
+the bidirectional tangential-position criterion. It is therefore not used as
+a matched solver replication.
+
+We nevertheless freeze a separate zero-shot stress test to measure portability
+under that documented mismatch. The five M4 checkpoints are deployed without
+retraining or post-result port tuning on the reference flat surface, the
+$10^\circ$ incline, and the 1.2-m-radius cylinder at 5, 8, and 12~N. This gives
+$5\times3\times3=45$ evaluations with keys matched to the completed PhysX
+study. Task, tracking, sampled-limit safety, and their compound are reported
+by surface block. The test quantifies transfer to this MuJoCo port rather than
+hardware transfer or general simulator invariance.
+% Insert the stable anonymous artifact URL here after double-blind deposition.

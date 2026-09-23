@@ -1,0 +1,56 @@
+\documentclass[final,5p,times,twocolumn]{elsarticle}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{tabularx}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{figures/}}
+
+\providecommand{\useRomanappendicesfalse}{}
+\providecommand{\appendices}{\appendix}
+\journal{Robotics and Autonomous Systems}
+
+\begin{document}
+\begin{frontmatter}
+
+\title{Regime-Adaptive Risk-Aware MPPI Control for Force-Aware Robotic Wiping with Temporal-Difference World Models}
+
+\author[addr1]{Zhiheng Li\corref{cor1}}
+\ead{LLzhiheng@outlook.com}
+\cortext[cor1]{Corresponding author.}
+\address[addr1]{Independent Researcher, Shanghai, China}
+
+\input{01_abstract_method_draft}
+
+\begin{keyword}
+robotic wiping \sep force-aware control \sep TD-MPC2 \sep
+model-predictive path integral control \sep contact-rich manipulation \sep
+cross-simulator transfer
+\end{keyword}
+
+\end{frontmatter}
+
+\input{02_introduction_method_draft}
+\input{03_related_work_method_draft}
+\input{04_simulation_task_method_draft}
+\input{05_risk_aware_method_draft}
+\input{06_experimental_design_method_draft}
+\input{07_development_results_draft}
+\input{07a_factor_separated_results}
+\input{07c_external_validity_results}
+\input{07b_provenance_numerical_audit_method_draft}
+\input{08_discussion_method_draft}
+\input{09_conclusion_method_draft}
+\input{11_appendix_method_draft}
+
+\input{declarations_ras}
+
+\bibliographystyle{elsarticle-num}
+\bibliography{PAPER_REFERENCES}
+
+\end{document}
+

@@ -1,0 +1,91 @@
+{
+  "format": "forcewipe_ppo_budget_hyperparameter_study_protocol_v1",
+  "status": "FROZEN_BEFORE_NEW_PPO_TRAINING",
+  "research_question": "Does the direct-PPO null result persist under a larger on-policy interaction budget and a bounded set of conventional PPO hyperparameters?",
+  "historical_anchor": {
+    "transitions_per_seed": 82774,
+    "seeds": [301, 302, 303, 304, 305],
+    "final_task_success": "0/90",
+    "interpretation": "The historical result applies only to the tested implementation, budget, and settings."
+  },
+  "training_interface": {
+    "observation_dimension": 16,
+    "action_dimension": 3,
+    "reward": "unchanged direct_first_pass_reward",
+    "training_scenario_family": "unchanged 30-block V16.30 PPO TRAIN family",
+    "rollout_transitions": 2048,
+    "update_epochs": 10,
+    "minibatches_per_epoch": 8,
+    "seeds": [301, 302, 303, 304, 305]
+  },
+  "budget_design": {
+    "multipliers": [1, 2, 4],
+    "transitions": [82774, 165548, 331096],
+    "rationale": "Geometric doubling from the exact matched-budget anchor estimates a learning curve without selecting an arbitrary large terminal budget.",
+    "implementation": "Each default seed is trained once to 4x and checkpointed at 1x, 2x, and 4x, so the three endpoints share one stochastic training prefix."
+  },
+  "hyperparameter_design": {
+    "method": "one factor at a time at 2x budget; all settings reported",
+    "profiles": [
+      {"id": "default", "learning_rate": 0.0003, "clip_ratio": 0.2, "entropy_coefficient": 0.005},
+      {"id": "lr_1e-4", "learning_rate": 0.0001, "clip_ratio": 0.2, "entropy_coefficient": 0.005},
+      {"id": "lr_1e-3", "learning_rate": 0.001, "clip_ratio": 0.2, "entropy_coefficient": 0.005},
+      {"id": "clip_0p1", "learning_rate": 0.0003, "clip_ratio": 0.1, "entropy_coefficient": 0.005},
+      {"id": "clip_0p3", "learning_rate": 0.0003, "clip_ratio": 0.3, "entropy_coefficient": 0.005},
+      {"id": "entropy_0", "learning_rate": 0.0003, "clip_ratio": 0.2, "entropy_coefficient": 0.0},
+      {"id": "entropy_0p01", "learning_rate": 0.0003, "clip_ratio": 0.2, "entropy_coefficient": 0.01}
+    ],
+    "rationale": {
+      "clip_ratio": "OpenAI Spinning Up documents 0.1--0.3 as the usual PPO-Clip range and uses 0.2 by default.",
+      "learning_rate": "1e-4 and 1e-3 form an approximately logarithmic bracket around the historical and official 3e-4 setting.",
+      "entropy_coefficient": "0 and 0.01 bracket the historical 0.005 coefficient and test whether its sparse success is exploration-sensitive.",
+      "scope": "This is a local sensitivity study, not an exhaustive hyperparameter optimisation claim."
+    }
+  },
+  "configuration_budget_endpoints": [
+    ["default", 1], ["default", 2], ["default", 4],
+    ["lr_1e-4", 2], ["lr_1e-3", 2],
+    ["clip_0p1", 2], ["clip_0p3", 2],
+    ["entropy_0", 2], ["entropy_0p01", 2]
+  ],
+  "development_selection": {
+    "blocks": "the six V16.30 PPO DEV blocks generated on 2026-08-30; disjoint from PPO TRAIN and final F0--F5",
+    "evaluations_per_endpoint": 90,
+    "total_evaluations": 810,
+    "note": "Earlier engineering smoke touched three DEV cells for non-PPO methods; no PPO checkpoint has been evaluated on these blocks.",
+    "selection_rule": [
+      "maximum compound task+tracking+safety+authority passes",
+      "then maximum task completions",
+      "then maximum total completed dose bins",
+      "then maximum summed episode return",
+      "then fixed protocol order"
+    ]
+  },
+  "confirmation": {
+    "configuration": "the single DEV-selected profile and budget, all five seeds",
+    "sets": [
+      "the frozen six-block F0--F5 matched weak-curvature suite",
+      "the frozen nine-block factor-separated main-method suite"
+    ],
+    "selection_data_excluded": true,
+    "primary_outcome": "task completion rate",
+    "secondary_outcomes": [
+      "compound pass rate", "tracking pass rate", "contact fraction",
+      "completed dose bins", "MRE", "NRMSE", "sampled force violations", "peak force"
+    ],
+    "analysis": "common-block hierarchical bootstrap with checkpoint seeds sampled independently across method families; point estimates and pointwise 95% intervals; no superiority gate"
+  },
+  "reporting_and_stopping": {
+    "all_profiles_reported": true,
+    "all_five_seeds_retained": true,
+    "no_final_set_parameter_selection": true,
+    "no_new_setting_after_confirmation": true,
+    "null_result_interpretation": "A null result supports only bounded robustness of the present PPO comparison, not universal PPO failure.",
+    "positive_result_interpretation": "A positive result replaces the weak PPO baseline in the paper and narrows any TD-MPC2 comparison accordingly."
+  },
+  "sources": [
+    "https://arxiv.org/abs/1707.06347",
+    "https://spinningup.openai.com/en/latest/algorithms/ppo.html",
+    "https://stable-baselines3.readthedocs.io/en/v2.4.0/modules/ppo.html"
+  ]
+}

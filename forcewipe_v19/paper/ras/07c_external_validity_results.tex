@@ -1,0 +1,54 @@
+\section{Deployment-Gap and Cross-Engine Results}
+\label{sec:deployment_gap_results}
+
+The frozen M4 controller was evaluated in 375 new one-factor stress
+evaluations.  Together with 45 reused nominal evaluations, the panel contains
+420 observations over the same three blocks, five checkpoints, and three
+force targets.  Every stress trace retained direct TD-MPC2 action authority;
+the native simulator force remained the outcome signal while only the
+learner-visible observation or registered task frame was perturbed.
+
+\input{tables/deployment_gap_endpoints}
+
+The signed force bias produced the clearest regulation response.  A
+$+0.8$~N bias reduced compound pass from 24/45 under nominal observation to
+12/45, including 11/15 to 3/15 in B0 and 7/15 to 0/15 in S1.  The corresponding
+paired changes were $-53.33$ percentage points in B0 (95\% pointwise interval
+$[-66.67,-40.00]$) and $-46.67$ points in S1 ($[-60.00,-33.33]$).  A
+$-0.8$~N bias instead yielded 31/45 compound passes, but it also reduced task
+and sampled-limit safety to 40/45 and raised the maximum native-force peak to
+22.337~N.  The signed intervention therefore exposes observation bias rather
+than a uniformly beneficial operating offset.
+
+Delay and frame error affected different parts of the task.  At 50~ms,
+task and sampled-limit safety fell from 42/45 and 43/45 to 34/45 and 35/45,
+and the maximum peak reached 26.084~N.  A 5-degree registered-normal error
+reduced task completion to 30/45 and compound pass to 22/45.  By contrast,
+0.10-mm TCP-position error produced 25/45 compound passes versus 24/45
+nominal, and 0.035-N RMS force noise produced 25/45.  These one-factor results
+identify signed force calibration, latency, and frame alignment as the main
+deployment sensitivities in the evaluated simulation blocks; their mixed
+effects across B0, S1, and S2 also rule out a single monotone robustness score.
+
+\subsection{Zero-Shot MuJoCo Stress Test}
+
+The independently implemented MuJoCo port was evaluated only after its
+open-loop mismatch had been recorded. Table~\ref{tab:cross_engine_transfer}
+reports the 45 zero-shot evaluations and their matched PhysX cells. The five
+frozen checkpoints retain task completion, tracking, and sampled-limit safety
+in all 30 flat and inclined evaluations. In the cylindrical block, however,
+all 15 evaluations fail each component: no episode completes, every trace
+exceeds 15~N, and the maximum peak reaches 20.24~N. The matched PhysX block
+is also the weakest of its three surfaces, but it retains 12/15 task
+successes, 6/15 tracking and compound passes, and 13/15 sampled-limit safety
+passes.
+
+\input{tables/cross_engine_transfer}
+
+The engine change therefore preserves the complete measured outcome on the
+two planar geometries and breaks it consistently on weak curvature. Because
+the calibration gate retains a bidirectional tangential-position mismatch,
+this contrast is a portability stress result rather than a solver-equivalence
+claim. It shows that the flat and inclined capability is not confined to one
+engine implementation, while curved contact remains dependent on the policy,
+geometry mapping, and contact solver as a coupled system.

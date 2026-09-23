@@ -1,0 +1,48 @@
+{
+  "format": "forcewipe_v19_factor_separated_evaluation_protocol_draft_v1",
+  "status": "COMPLETED_REPORTED_NO_RERUN",
+  "research_question": "Does the complete regime-adaptive planner improve the joint wiping outcome relative to the same force-conditioned checkpoint with fixed objective and fixed compute under isolated environment shifts?",
+  "methods": [
+    "M1_unified_mppi_fixed_weights_fixed_budget",
+    "M4_full_ra_rmppi"
+  ],
+  "checkpoint_seeds": [201, 202, 203, 204, 205],
+  "target_forces_n": [5.0, 8.0, 12.0],
+  "blocks": [
+    {"block_id": "B0", "factor": "reference", "level": "reference"},
+    {"block_id": "S1", "factor": "surface", "level": "incline_10deg"},
+    {"block_id": "S2", "factor": "surface", "level": "cylinder_r1.2m"},
+    {"block_id": "P1", "factor": "path", "level": "arc"},
+    {"block_id": "P2", "factor": "path", "level": "s_curve"},
+    {"block_id": "F1", "factor": "friction", "level": "mu_0.30"},
+    {"block_id": "F2", "factor": "friction", "level": "mu_0.70"},
+    {"block_id": "K1", "factor": "support_stiffness", "level": "1600_N_per_m"},
+    {"block_id": "K2", "factor": "support_stiffness", "level": "3400_N_per_m"}
+  ],
+  "evaluation_count": 270,
+  "factor_isolation": "All blocks share target-independent scenario seed, residual seed, tool, disturbance, path length, plant mass, damping ratio, and restitution. Each non-reference block changes only the fields named by its factor level.",
+  "common_random_numbers": "Within each seed-block-target pair, M1 and M4 share the per-control-step planner random stream.",
+  "frozen_method_selection": {
+    "bc_coefficient": 2.0,
+    "risk_envelope_mode": "force_only",
+    "selection_basis": "The prespecified development rule first compared force-limit violations, task successes and tracking passes, then mean target-normalised RMSE and mean relative error. All three modes tied on the first three outcomes; force_only had the lowest mean NRMSE and MRE.",
+    "envelope_ablation_evaluations": 45,
+    "historical_threshold_sensitivity_evaluations": 90
+  },
+  "primary_outcome": "joint task completion, tracking MRE <= 15%, tracking NRMSE <= 20%, and zero native samples above 15 N",
+  "secondary_outcomes": [
+    "task completion",
+    "MRE",
+    "NRMSE",
+    "signed force bias",
+    "contact fraction",
+    "contact-loss duration",
+    "peak sampled force",
+    "planning latency",
+    "planning sample count"
+  ],
+  "analysis": "paired seed-block-target differences with block- and seed-aware bootstrap intervals; factor panels reported separately; no claim of random-population generalisation",
+  "execution_rule": "Run only after the method, BC coefficient, and risk-envelope mode are frozen from development evidence. Complete and report all 270 evaluations regardless of scientific outcome.",
+  "completed_result": "../results/final/v19_factor_separated_m1_m4_evaluation_20260920_r1/RESULT.json",
+  "completed_analysis": "../results/analysis/v19_factor_separated_m1_m4/FACTOR_SEPARATED_ANALYSIS.json"
+}

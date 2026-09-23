@@ -1,0 +1,90 @@
+{
+  "claim_boundary": "This is a zero-shot cross-engine simulation stress test. It is not hardware validation, Sim2Real evidence, or a matched solver replication.",
+  "contact_config": {
+    "actuation_delay_steps": 2,
+    "actuation_gain": 1.0,
+    "actuation_time_constant_s": 0.08,
+    "contact_damping_ratio": 0.5,
+    "contact_impedance_max": 0.95,
+    "contact_impedance_min": 0.9,
+    "contact_impedance_width_m": 0.001,
+    "contact_margin_m": 0.0035,
+    "contact_time_constant_s": 0.03,
+    "control_timestep_s": 0.01,
+    "friction_scale": 1.0,
+    "physics_timestep_s": 0.001,
+    "solver_iterations": 50,
+    "support_drive_scale": 1.0,
+    "tool_drive_scale": 0.8,
+    "tool_tangential_drive_scale": null
+  },
+  "created_utc": "2026-09-20T21:47:34.609696Z",
+  "format": "forcewipe_v19_mujoco_zero_shot_transfer_definition_v1",
+  "protocol": "config/V19_MUJOCO_ZERO_SHOT_TRANSFER_PROTOCOL_2026-09-21.json",
+  "protocol_sha256": "82b56ee2a991aaff6f832dc1219690777d776c06d986bf6872e167af3e4340cd",
+  "scenario_definitions": [
+    {
+      "block_id": "B0",
+      "scenario_digest": "f8cc31b8d994173c0cec6367c97dbab0c1b776f7ec9ab96b52d024c5f9dabdd4",
+      "scenario_id": 19900000,
+      "scenario_seed": 919900000,
+      "target_force_n": 5.0
+    },
+    {
+      "block_id": "B0",
+      "scenario_digest": "027a5fb396fe8e9a5282042391b2a7af1cf1ec8396cf3d3710cd3cd220e9ab00",
+      "scenario_id": 19900001,
+      "scenario_seed": 919900000,
+      "target_force_n": 8.0
+    },
+    {
+      "block_id": "B0",
+      "scenario_digest": "23099c30ec8886fab113851b334a83f269ca7e52e2a03dcc1592bd64a8ccec77",
+      "scenario_id": 19900002,
+      "scenario_seed": 919900000,
+      "target_force_n": 12.0
+    },
+    {
+      "block_id": "S1",
+      "scenario_digest": "6249b18223ecf181d172293f0c5b5d41808a7859c49ff94127d6e0e4ff392e94",
+      "scenario_id": 19900003,
+      "scenario_seed": 919900000,
+      "target_force_n": 5.0
+    },
+    {
+      "block_id": "S1",
+      "scenario_digest": "8c74cfada41224cf1cb3244de4d7ce060bf866da32d28b393cc342a5c05580af",
+      "scenario_id": 19900004,
+      "scenario_seed": 919900000,
+      "target_force_n": 8.0
+    },
+    {
+      "block_id": "S1",
+      "scenario_digest": "5cdbfb0ca21425c8c53b537f18d10dbb7a7200c02c0d240197c2814e9b1e1c25",
+      "scenario_id": 19900005,
+      "scenario_seed": 919900000,
+      "target_force_n": 12.0
+    },
+    {
+      "block_id": "S2",
+      "scenario_digest": "7c2d675458a6560d64aacc07e6577e56a2aed4b385ebf6f270832d3393749ba3",
+      "scenario_id": 19900006,
+      "scenario_seed": 919900000,
+      "target_force_n": 5.0
+    },
+    {
+      "block_id": "S2",
+      "scenario_digest": "bc53d830d41d0c185c5a96f8767f9653d1e3d499fd9a01af9197584687b6709d",
+      "scenario_id": 19900007,
+      "scenario_seed": 919900000,
+      "target_force_n": 8.0
+    },
+    {
+      "block_id": "S2",
+      "scenario_digest": "2b7c2fe5a4699490e007c7cdab43cb7fefbe91cca71fc17277a9a761d58f890c",
+      "scenario_id": 19900008,
+      "scenario_seed": 919900000,
+      "target_force_n": 12.0
+    }
+  ]
+}
