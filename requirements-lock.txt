@@ -1,6 +1,6 @@
 # Reference environment: Ubuntu 22.04, Python 3.10.12.
 # Install the pinned PyTorch CUDA wheels separately as documented in
-# REPRODUCIBILITY.md.
+# docs/REPRODUCIBILITY.md.
 dm-control==1.0.16
 gymnasium==0.29.1
 hydra-core==1.3.2

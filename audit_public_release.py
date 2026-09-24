@@ -10,7 +10,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent
-V19 = ROOT / "forcewipe_v19"
+V19 = ROOT
 
 
 def load(relative: str):

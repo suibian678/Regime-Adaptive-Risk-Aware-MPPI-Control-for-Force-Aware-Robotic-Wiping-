@@ -33,14 +33,14 @@ def destination(name):
     if not parts or ".." in parts or name.startswith("/") or "\\" in name:
         raise ValueError(f"Invalid archive path: {name}")
     if len(parts) >= 3 and parts[0] == "results" and parts[1] in RUNS:
-        return ROOT / "forcewipe_v19/results" / RUNS[parts[1]] / Path(*parts[2:])
+        return ROOT / "results" / RUNS[parts[1]] / Path(*parts[2:])
     if len(parts) == 3 and parts[0] == "checkpoints":
         seed = int(parts[1].removeprefix("seed_"))
         if seed not in range(201, 206):
             raise ValueError(f"Unexpected checkpoint seed: {seed}")
-        return ROOT / f"forcewipe_v19/results/train/v19_force_conditioned_seed{seed}_bc2_u4000" / parts[2]
+        return ROOT / f"results/train/v19_force_conditioned_seed{seed}_bc2_u4000" / parts[2]
     if len(parts) == 2 and parts[0] == "summaries":
-        return ROOT / "forcewipe_v19/results/dev" / parts[1]
+        return ROOT / "results/dev" / parts[1]
     return None
 
 
@@ -77,8 +77,8 @@ def main():
         # Public calibration metadata complement the byte-frozen checkpoint ZIP.
         calibrations = []
         for seed in range(201, 206):
-            source = ROOT / f"forcewipe_v19/results/training/seed_{seed}/TRAIN_VALIDATION_CALIBRATION.json"
-            target = ROOT / f"forcewipe_v19/results/train/v19_force_conditioned_seed{seed}_bc2_u4000/TRAIN_VALIDATION_CALIBRATION.json"
+            source = ROOT / f"results/training/seed_{seed}/TRAIN_VALIDATION_CALIBRATION.json"
+            target = ROOT / f"results/train/v19_force_conditioned_seed{seed}_bc2_u4000/TRAIN_VALIDATION_CALIBRATION.json"
             target.resolve().relative_to(ROOT.resolve())
             if not source.is_file():
                 raise FileNotFoundError(source)

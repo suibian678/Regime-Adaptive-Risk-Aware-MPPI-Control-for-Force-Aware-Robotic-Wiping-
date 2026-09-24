@@ -1,76 +1,79 @@
 # ForceWipe RA-RMPPI
 
-This repository accompanies **Regime-Adaptive Risk-Aware MPPI Control for
-Force-Aware Robotic Wiping with Temporal-Difference World Models**. It contains
-the force-conditioned TD-MPC2 extensions, regime-adaptive risk-aware MPPI
-(RA-RMPPI), simulation task definitions, evaluation protocols, compact frozen
-results, analysis scripts, and manuscript sources.
+Force-conditioned TD-MPC2 with **regime-adaptive risk-aware model predictive path
+integral control (RA-RMPPI)** for direct robotic wiping in simulation.
 
-## Main evidence
+Companion code for *Regime-Adaptive Risk-Aware MPPI Control for Force-Aware
+Robotic Wiping with Temporal-Difference World Models*.
 
-- In 270 paired evaluations, RA-RMPPI increased compound pass from 85/135 to
-  100/135 relative to fixed-budget MPPI.
-- The paired improvement was 11.11 percentage points with a block- and
-  seed-aware 95% interval of [3.70, 18.52] percentage points.
-- RA-RMPPI used eight fewer planning samples and reduced median planning time
-  by 25.7 ms.
-- Five frozen checkpoints transferred without retraining to the MuJoCo task
-  port: all 30 flat and inclined evaluations passed, whereas all 15 weakly
-  curved evaluations exposed the remaining portability boundary.
+**[Paper](paper/ras/manuscript_ras.pdf)** ·
+**[Reproduction guide](docs/REPRODUCIBILITY.md)** ·
+**[Development trace](docs/DEVELOPMENT_TRACE.md)** ·
+**[Data and models](docs/DATA_AND_MODELS.md)**
 
-These are simulation results. Cross-engine transfer is a robustness test, not
-a substitute for hardware validation.
+## What this repository contains
 
-## Repository layout
+One current implementation, organised by function. Start with
+[`risk_aware_mppi.py`](src/forcewipe/risk_aware_mppi.py) for the planner,
+[`risk_conditioning.py`](src/forcewipe/risk_conditioning.py) for regime-dependent
+costs and sampling budgets, and
+[`force_conditioned_world_model.py`](src/forcewipe/force_conditioned_world_model.py)
+for the world-model extension.
 
-| Path | Contents |
+| Directory | Contents |
 | --- | --- |
-| `forcewipe_v19/code/` | RA-RMPPI, force conditioning, calibration, and task ports |
-| `forcewipe_v19/release/runtime_source/` | Frozen TD-MPC2 runtime snapshot |
-| `forcewipe_v4/`--`forcewipe_v16/` | Earlier modules required by frozen runners |
-| `forcewipe_v19/config/` | Evaluation and cross-engine protocols |
-| `forcewipe_v19/scripts/` | Training, evaluation, analysis, and audit entry points |
-| `forcewipe_v19/tests/` | Non-physics unit and contract tests |
-| `forcewipe_v19/results/` | Compact frozen results and independent audits |
-| `forcewipe_v19/paper/` | RAS and OJ-CS packages, tables, and vector figures |
-| `MODEL_MANIFEST.csv` | Checkpoint identities for the external model archive |
-| `MANIFEST_SHA256.csv` | Byte counts and SHA-256 identities for repository files |
+| `src/forcewipe/` | Current method, simulation interfaces, training utilities and comparison methods |
+| `scripts/` | Training, evaluation, analysis and figure-generation entry points |
+| `tests/` | Non-physics unit and interface tests |
+| `config/` | Experiment definitions and frozen protocols |
+| `results/` | Compact result records, training metrics and analyses |
+| `paper/` | The same paper in RAS and OJ-CS submission formats |
+| `archive/` | Earlier controlled-study and numerical-audit evidence, not alternative software versions |
+| `vendor/tdmpc2/` | The attributed TD-MPC2 runtime snapshot |
+| `docs/` | Reproduction instructions and the main development milestones |
 
-Raw step traces and model checkpoints are kept out of Git history. Their
-archive structure and integrity checks are described in `DATA_AND_MODELS.md`.
+Historical identifiers inside result records, protocols and checkpoint names
+are retained to keep the evidence traceable. They are not versions to choose
+between. The changes that led to this implementation are summarised in the
+[development trace](docs/DEVELOPMENT_TRACE.md).
 
-## Environment
+## Main results
 
-The reported environment used Python 3.10.12, PyTorch 2.11.0 with CUDA 12.8,
-ManiSkill 3.0.1, SAPIEN 3.0.3, and MuJoCo 3.1.2. Exact key versions are listed
-in `requirements-lock.txt`.
+- In 270 paired evaluations, compound pass increased from **85/135 to 100/135**
+  relative to fixed-budget MPPI using the same checkpoints. The improvement was
+  **11.11 percentage points**, with a block- and seed-aware 95% interval of
+  **[3.70, 18.52] percentage points**.
+- Median planning time decreased by **25.7 ms**.
+- Five frozen checkpoints transferred to MuJoCo without retraining. All
+  **30 flat and inclined evaluations** passed the compound criterion. The
+  **15 weakly curved evaluations** exposed the remaining transfer boundary.
 
-Run the public commands from the `forcewipe_v19` directory. This avoids the
-top-level version directory being interpreted as a Python namespace package
-and keeps the frozen sibling-version imports unambiguous:
+These are simulation results. Cross-engine evaluation tests robustness, not
+hardware deployment.
+
+## Quick start
+
+The compact evidence check needs only Python's standard library:
 
 ```bash
-cd forcewipe_v19
-export PYTHONPATH="$PWD/code:$PWD/release/runtime_source:$PWD/release/runtime_source/tdmpc2:$PWD/../forcewipe_v16/code:$PWD/../forcewipe_v15/code:$PWD/../forcewipe_v14/code:$PWD/../forcewipe_v6/code:$PWD/../forcewipe_v4/code:$PYTHONPATH"
-pytest -q tests
-python ../audit_public_release.py
+python audit_public_release.py
 ```
 
-The public tree preserves the original sibling-version layout expected by the
-frozen runners. A small path-only portability patch is documented in
-`PORTABILITY_PATCHES.md`. The full training and evaluation workflow, including expected inputs and
-which commands require the separately archived checkpoints, is documented in
-`REPRODUCIBILITY.md`.
+For the unit tests, use the environment in
+[the reproduction guide](docs/REPRODUCIBILITY.md), then run from this repository:
 
-## Licence and attribution
+```bash
+python -m pytest -q
+```
 
-Original ForceWipe extensions are released under the MIT licence. The bundled
-TD-MPC2 runtime derives from Nicklas Hansen's MIT-licensed TD-MPC2 repository
-at commit `8bbc14ebabdb32ea7ada5c801dc525d0dc73bafe`. See `LICENSE` and
-`THIRD_PARTY_NOTICES.md`.
+The checkpoint and raw-trace archive is separate from Git. Its identities and
+restoration commands are documented in [Data and models](docs/DATA_AND_MODELS.md).
 
-## Citation
+## Licence and citation
 
-Citation metadata are provided in `CITATION.cff`. A DOI will be added after
-the archival release is deposited.
+ForceWipe extensions use the [MIT licence](LICENSE). The TD-MPC2 runtime is
+based on Nicklas Hansen's implementation at commit
+`8bbc14ebabdb32ea7ada5c801dc525d0dc73bafe`.
+See [third-party notices](docs/THIRD_PARTY_NOTICES.md) and [citation metadata](CITATION.cff).
+An archival DOI will be added after the data and model deposit.
 
