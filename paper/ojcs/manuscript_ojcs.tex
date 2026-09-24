@@ -7,7 +7,7 @@
 \usepackage{graphicx}
 \usepackage{placeins}
 \usepackage{tabularx}
-\usepackage{url}
+\usepackage[hyphens]{url}
 \usepackage{xcolor}
 \usepackage{etoolbox}
 \AtBeginDocument{\definecolor{tmlcncolor}{cmyk}{0.93,0.59,0.15,0.02}\definecolor{NavyBlue}{RGB}{0,86,125}}
@@ -57,10 +57,18 @@ model-predictive path integral control, robotic wiping, TD-MPC2
 \section*{Acknowledgment}
 OpenAI Codex assisted with code review, experiment automation, manuscript
 organization, and language editing; the author verified all executable and
-reported outputs and takes full responsibility. Code and compact results will
-be released in a public Git repository, with checkpoints and traces in a
-versioned archival record; stable identifiers will be inserted before
-submission.
+reported outputs and takes full responsibility.
+
+\section*{Data and Code Availability}
+Source code, experiment definitions, compact results, independent analyses,
+and figure-generation scripts are available in the
+GitHub repository:\newline
+\url{https://github.com/suibian678/Regime-Adaptive-Risk-Aware-MPPI-Control-for-Force-Aware-Robotic-Wiping-}.
+The software, five model checkpoints, and step-level traces for the paired
+planner, PPO confirmation, deployment-gap, and cross-engine studies are
+archived on Zenodo at \url{https://doi.org/10.5281/zenodo.22929983}.
+Historical studies are supplied as result records or audited summaries.
+The original training-demonstration collections are not included.
 
 \bibliographystyle{IEEEtran}
 \bibliography{PAPER_REFERENCES}

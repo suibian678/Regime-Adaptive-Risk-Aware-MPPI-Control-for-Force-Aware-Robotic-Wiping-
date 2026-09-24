@@ -9,15 +9,29 @@ kept out of Git history:
 - step-level factor-separated, PPO confirmation, deployment-gap, and
   cross-engine traces. Training metrics are included in the public repository.
 
-Before journal submission, these files should be deposited in a versioned
-research archive such as Zenodo. The release record should include:
+The software and research artifacts are publicly archived on
+[Zenodo](https://doi.org/10.5281/zenodo.22929983), version 1.0.0, published on 24 September 2026.
+The archived software ZIP corresponds to repository commit
+`026276c048eb04429fb93ce8dcd8a7ecfdd0f965`. Later documentation updates in
+GitHub do not change that snapshot. Payload manifests and environment records
+identify the archived files and software versions.
 
-1. the archive DOI and version;
-2. the repository commit hash;
-3. a payload manifest containing path, byte count, and SHA-256 digest;
-4. explicit simulator and software versions;
-5. a statement that the cross-engine experiment is simulation robustness
-   evidence rather than hardware validation.
+## Download and reassemble
+
+Download all eight `ForceWipe_RA_RMPPI_full_artifact_v1.zip.part001` through
+`.part008` files, plus `assemble_artifact.py`, `ARTIFACT_PARTS_MANIFEST.json`
+and `READ_ME_FIRST.txt`, into one directory. The parts form one archive, not
+different versions. With Python 3.8 or later, run in that directory:
+
+```bash
+python assemble_artifact.py
+```
+
+The script verifies every part and reconstructs
+`ForceWipe_RA_RMPPI_full_artifact_v1.zip` (380,931,447 bytes). Its SHA-256 is
+`90d1e81d7b7c853a4bdaa8da0d97317a8ecd49743911365e3b3f77b928b95734`.
+The separate `forcewipe-ra-rmppi-public-repository.zip` contains the software
+snapshot and does not need reassembly.
 
 ## Verify and restore
 
@@ -55,6 +69,7 @@ numerical-sensitivity evidence and PPO development selection are supplied as
 audited summaries, not as complete raw numerical/DEV trace archives. The
 historical controlled-suite `RESULT.json` records are in the public repository.
 
-After deposition, replace the repository and DOI placeholders in both journal
-submission packages and add the DOI to `CITATION.cff`.
+The original training-demonstration collections are not included. The archive
+supports the documented evaluation and analysis workflow, not a complete
+from-scratch reconstruction of the training data.
 

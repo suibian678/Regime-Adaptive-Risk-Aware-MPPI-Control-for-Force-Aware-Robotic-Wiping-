@@ -9,7 +9,8 @@ Robotic Wiping with Temporal-Difference World Models*.
 **[Paper](paper/ras/manuscript_ras.pdf)** ·
 **[Reproduction guide](docs/REPRODUCIBILITY.md)** ·
 **[Development trace](docs/DEVELOPMENT_TRACE.md)** ·
-**[Data and models](docs/DATA_AND_MODELS.md)**
+**[Data and models](docs/DATA_AND_MODELS.md)** ·
+**[Zenodo archive](https://doi.org/10.5281/zenodo.22929983)**
 
 ## What this repository contains
 
@@ -75,5 +76,8 @@ ForceWipe extensions use the [MIT licence](LICENSE). The TD-MPC2 runtime is
 based on Nicklas Hansen's implementation at commit
 `8bbc14ebabdb32ea7ada5c801dc525d0dc73bafe`.
 See [third-party notices](docs/THIRD_PARTY_NOTICES.md) and [citation metadata](CITATION.cff).
-An archival DOI will be added after the data and model deposit.
+The software and research artifacts are archived as version 1.0.0 on
+[Zenodo](https://doi.org/10.5281/zenodo.22929983) (DOI: `10.5281/zenodo.22929983`).
+The archive preserves the released snapshot; this repository contains subsequent
+maintenance and documentation updates.
 
